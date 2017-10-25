@@ -42,7 +42,7 @@
 					</execution>
 				</executions>
 				<configuration>
-				    <mainClass>cmpe282.pubsub.PublisherLocalExample</mainClass>
+				    <mainClass>cmpe282.pubsub.PublisherExample</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>

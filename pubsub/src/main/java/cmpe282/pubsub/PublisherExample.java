@@ -25,6 +25,7 @@ public class PublisherExample {
 	public static void main(String... args){
 		String topicId = args[0];
 		TopicName topicName = TopicName.create(PROJECT_ID, topicId);
+		log.info(PROJECT_ID);
 		log.info(topicName.toString());
 		try {
 			Publisher publisher = Publisher.defaultBuilder(topicName).build();
