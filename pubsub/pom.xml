@@ -26,6 +26,16 @@
 			<artifactId>google-cloud-pubsub</artifactId>
 			<version>0.25.0-beta</version>
 		</dependency>
+				<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-integration-gcp</artifactId>
+			<version>1.0.0.BUILD-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-gcp-starter-pubsub</artifactId>
+			<version>1.0.0.BUILD-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -36,14 +46,26 @@
 				<version>1.2.1</version>
 				<executions>
 					<execution>
+						<id>publisher</id>
 						<goals>
 							<goal>java</goal>
 						</goals>
+						<configuration>
+						    <mainClass>cmpe282.pubsub.example.PublisherExample</mainClass>
+						    <includePluginDependencies>false</includePluginDependencies>
+						</configuration>
+					</execution>
+					<execution>
+						<id>subscriber</id>
+						<goals>
+							<goal>java</goal>
+						</goals>
+						<configuration>
+						    <mainClass>cmpe282.pubsub.example.SubscriberExample</mainClass>
+						    <includePluginDependencies>false</includePluginDependencies>
+						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-				    <mainClass>cmpe282.pubsub.PublisherExample</mainClass>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
