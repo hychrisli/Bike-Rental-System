@@ -19,7 +19,6 @@ public class MyTopicMsgHandler implements MessageHandler {
         AckReplyConsumer consumer =
             (AckReplyConsumer) msg.getHeaders().get(GcpHeaders.ACKNOWLEDGEMENT);
         consumer.ack();
-
     }
 
 }
