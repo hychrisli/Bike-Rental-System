@@ -3,13 +3,19 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>cmpe282</groupId>
-	<artifactId>pubsub</artifactId>
+	<artifactId>station</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>pubsub</name>
+	<name>station</name>
 	<url>http://maven.apache.org</url>
 
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.8.RELEASE</version>
+	</parent>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
@@ -24,9 +30,8 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.google.cloud</groupId>
-			<artifactId>google-cloud-pubsub</artifactId>
-			<version>0.25.0-beta</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -39,42 +44,27 @@
 			<version>1.0.0.BUILD-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.9.2</version>
+			<groupId>cmpe282</groupId>
+			<artifactId>pubsub</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.6.0</version>
-				<executions>
-					<execution>
-						<id>publisher</id>
-						<goals>
-							<goal>java</goal>
-						</goals>
-						<configuration>
-							<mainClass>cmpe282.pubsub.example.PublisherExample</mainClass>
-							<includePluginDependencies>false</includePluginDependencies>
-						</configuration>
-					</execution>
-					<execution>
-						<id>subscriber</id>
-						<goals>
-							<goal>java</goal>
-						</goals>
-						<configuration>
-							<mainClass>cmpe282.pubsub.example.SubscriberExample</mainClass>
-							<includePluginDependencies>false</includePluginDependencies>
-						</configuration>
-					</execution>
-				</executions>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>repository.spring.snapshot</id>
+			<name>Spring Snapshot Repository</name>
+			<url>http://repo.spring.io/snapshot</url>
+		</repository>
+	</repositories>
 
 </project>

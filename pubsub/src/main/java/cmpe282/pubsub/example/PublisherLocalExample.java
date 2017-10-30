@@ -1,4 +1,4 @@
-package cmpe282.pubsub;
+package cmpe282.pubsub.example;
 
 import java.util.logging.Logger;
 import com.google.api.core.ApiFuture;
