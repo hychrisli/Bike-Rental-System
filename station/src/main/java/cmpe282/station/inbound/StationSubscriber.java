@@ -13,25 +13,25 @@ import org.springframework.messaging.MessageHandler;
 import org.springframework.stereotype.Component;
 
 import cmpe282.pubsub.inbound.CmpeSubscriber;
-import cmpe282.station.msghandler.MyTopicMsgHandler;
+import cmpe282.station.msghandler.StationMsgHandler;
 
 @Component
 public class StationSubscriber extends CmpeSubscriber {
 
     @Bean
-    public MessageChannel stationSubscriberChannel() {
+    public MessageChannel stationInChannel() {
 	return new DirectChannel();
     }
 
     @Bean
-    @ServiceActivator(inputChannel = "stationSubscriberChannel")
+    @ServiceActivator(inputChannel = "stationInChannel")
     public MessageHandler stationMsgReceiver() {
-	return new MyTopicMsgHandler();
+	return new StationMsgHandler();
     }
 
     @Bean
     public PubSubInboundChannelAdapter stationChannelAdapter(
-	    @Qualifier("stationSubscriberChannel") MessageChannel inputChannel,
+	    @Qualifier("stationInChannel") MessageChannel inputChannel,
 	    PubSubOperations pubSubTemplate) {
 	return buildChannelAdapter(inputChannel, pubSubTemplate, mySub.name());
     }
