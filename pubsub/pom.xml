@@ -12,6 +12,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<spring-cloud-gcp.version>1.0.0.BUILD-SNAPSHOT</spring-cloud-gcp.version>
 	</properties>
 
 	<dependencies>
@@ -26,7 +28,7 @@
 			<artifactId>google-cloud-pubsub</artifactId>
 			<version>0.25.0-beta</version>
 		</dependency>
-				<dependency>
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-integration-gcp</artifactId>
 			<version>1.0.0.BUILD-SNAPSHOT</version>
@@ -48,7 +50,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.2.1</version>
+				<version>1.6.0</version>
 				<executions>
 					<execution>
 						<id>publisher</id>
@@ -56,8 +58,8 @@
 							<goal>java</goal>
 						</goals>
 						<configuration>
-						    <mainClass>cmpe282.pubsub.example.PublisherExample</mainClass>
-						    <includePluginDependencies>false</includePluginDependencies>
+							<mainClass>cmpe282.pubsub.example.PublisherExample</mainClass>
+							<includePluginDependencies>false</includePluginDependencies>
 						</configuration>
 					</execution>
 					<execution>
@@ -66,8 +68,8 @@
 							<goal>java</goal>
 						</goals>
 						<configuration>
-						    <mainClass>cmpe282.pubsub.example.SubscriberExample</mainClass>
-						    <includePluginDependencies>false</includePluginDependencies>
+							<mainClass>cmpe282.pubsub.example.SubscriberExample</mainClass>
+							<includePluginDependencies>false</includePluginDependencies>
 						</configuration>
 					</execution>
 				</executions>

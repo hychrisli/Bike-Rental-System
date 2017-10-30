@@ -1,10 +1,13 @@
 package cmpe282.pubsub.example;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import com.google.api.core.ApiFuture;
+import com.google.api.gax.rpc.AlreadyExistsException;
 import com.google.cloud.ServiceOptions;
 import com.google.cloud.pubsub.v1.Publisher;
+import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.TopicName;
@@ -19,7 +22,8 @@ public class PublisherExample {
     private static final String PROJECT_ID = ServiceOptions.getDefaultProjectId();
     private static Logger log = Logger.getLogger(PublisherExample.class.getName());
 
-    public static ApiFuture<String> publishMsg(Publisher publisher, HelloStation stationMsg) throws JsonProcessingException {
+    public static ApiFuture<String> publishMsg(Publisher publisher, HelloStation stationMsg)
+	    throws JsonProcessingException {
 
 	ObjectMapper mapper = new ObjectMapper();
 	String jsonStr = mapper.writeValueAsString(stationMsg);
@@ -33,13 +37,24 @@ public class PublisherExample {
 	TopicName topicName = TopicName.create(PROJECT_ID, topicId);
 	log.info(PROJECT_ID);
 	log.info(topicName.toString());
+
+	try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
+	    topicAdminClient.createTopic(topicName);
+	}catch (AlreadyExistsException e) {
+	    log.info("topic exists: " + topicName.toString());
+	} catch (IOException e1) {
+	    e1.printStackTrace();
+	} catch (Exception e1) {
+	    e1.printStackTrace();
+	}
+
 	try {
 	    Publisher publisher = Publisher.defaultBuilder(topicName).build();
 
 	    for (int i = 0; i < MESSAGE_COUNT; i++) {
 		String message = "message - " + i;
 		log.info(message);
-		HelloStation helloStation = new HelloStation(i, "Test : " + i );
+		HelloStation helloStation = new HelloStation(i, "Test : " + i);
 		ApiFuture<String> msgId = publishMsg(publisher, helloStation);
 		log.info(msgId.get());
 	    }

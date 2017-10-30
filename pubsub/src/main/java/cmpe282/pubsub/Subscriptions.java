@@ -1,5 +1,8 @@
 package cmpe282.pubsub;
 
 public enum Subscriptions {
-    mySub
+    
+    // Proof Concept
+    mySub,
+    mySub2
 }
