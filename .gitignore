@@ -1,3 +1,9 @@
+userapi/*
+!userapi/src/
+userapi/src/*
+!userapi/src/userapi/
+!userapi/src/pubsub/
+
 # Compiled class file
 *.class
 
