@@ -4,8 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"sync"
 
+	"cloud.google.com/go/pubsub"
 	"github.com/gorilla/mux"
+	"github.com/mitchellh/mapstructure"
 	"github.com/unrolled/render"
 	"github.com/urfave/negroni"
 	mgo "gopkg.in/mgo.v2"
@@ -66,13 +69,75 @@ func userHandler(formatter *render.Render) http.HandlerFunc {
 	}
 }
 
+var (
+	topic *pubsub.Topic
+
+	// Messages received by this instance.
+	messagesMu sync.Mutex
+	messages   []string
+)
+
+const maxMessages = 10
+
 // POST new order API handler
 func orderCreateHandler(formatter *render.Render) http.HandlerFunc {
-	return func(w http.ResponseWriter, req *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		msg := &pushRequest{}
+		if err := json.NewDecoder(r.Body).Decode(msg); err != nil {
+			http.Error(w, fmt.Sprintf("Could not decode body: %v", err), http.StatusBadRequest)
+			return
+		}
+		var dat map[string]interface{}
+
+		if err := json.Unmarshal(msg.Message.Data, &dat); err != nil {
+			panic(err)
+		}
+		// fmt.Println(dat)
+
+		// messagesMu.Lock()
+		// defer messagesMu.Unlock()
+		// message := string(msg.Message.Data)
+		// fmt.Println(message)
+
 		var o order
-		_ = json.NewDecoder(req.Body).Decode(&o)
-		defer req.Body.Close()
-		fmt.Println(o)
-		formatter.JSON(w, http.StatusOK, map[string]string{"status": "ok"})
+		if err := mapstructure.Decode(dat, &o); err != nil {
+			panic(err)
+		}
+
+		fmt.Println()
+
+		id := o.BelongTo
+		session, err := mgo.Dial(mongodbServer)
+		if err != nil {
+			panic(err)
+		}
+		defer session.Close()
+		session.SetMode(mgo.Monotonic, true)
+		c := session.DB(mongodbDatabase).C(mongodbCollection)
+		err = c.Update(bson.M{"_id": id}, bson.M{"$push": bson.M{"orders": o}})
+		if err != nil {
+			fmt.Println(err)
+			formatter.JSON(w, http.StatusNotFound, map[string]string{"error": "updating user " + id + " with error!"})
+		}
+		// msg := &pushRequest{}
+		// b, err := ioutil.ReadAll(req.Body)
+		// if err != nil {
+		// 	log.Fatal(err)
+		// }
+		// fmt.Printf("%s\n", b)
+		// if err := json.NewDecoder(req.Body).Decode(msg); err != nil {
+		// 	http.Error(w, fmt.Sprintf("Could not decode body: %v", err), http.StatusBadRequest)
+		// 	return
+		// }
+		// defer req.Body.Close()
+		// messagesMu.Lock()
+		// defer messagesMu.Unlock()
+		// // Limit to ten.
+		// messages = append(messages, string(msg.Message.Data))
+		// if len(messages) > maxMessages {
+		// 	messages = messages[len(messages)-maxMessages:]
+		// }
+		// fmt.Println(messages)
+		// formatter.JSON(w, http.StatusOK, map[string]string{"status": "ok"})
 	}
 }
