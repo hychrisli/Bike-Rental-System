@@ -1,4 +1,4 @@
-package cmpe282.station.outbound;
+package cmpe282.station.pubsub.outbound;
 
 import static cmpe282.pubsub.Topics.myTopic2;
 

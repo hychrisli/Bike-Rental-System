@@ -1,4 +1,4 @@
-package cmpe282.station.msghandler;
+package cmpe282.station.pubsub.msghandler;
 
 import java.util.logging.Logger;
 
@@ -10,7 +10,7 @@ import org.springframework.messaging.MessagingException;
 
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 
-import cmpe282.station.outbound.StationPublisher.StationOutGateway;
+import cmpe282.station.pubsub.outbound.StationPublisher.StationOutGateway;
 
 public class StationMsgHandler implements MessageHandler {
 

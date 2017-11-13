@@ -1,4 +1,4 @@
-package cmpe282.station.inbound;
+package cmpe282.station.pubsub.inbound;
 
 import static cmpe282.pubsub.Subscriptions.mySub;
 
@@ -13,7 +13,7 @@ import org.springframework.messaging.MessageHandler;
 import org.springframework.stereotype.Component;
 
 import cmpe282.pubsub.inbound.CmpeSubscriber;
-import cmpe282.station.msghandler.StationMsgHandler;
+import cmpe282.station.pubsub.msghandler.StationMsgHandler;
 
 @Component
 public class StationSubscriber extends CmpeSubscriber {
