@@ -1,6 +1,6 @@
 package cmpe282.station.pubsub.inbound;
 
-import static cmpe282.pubsub.Subscriptions.mySub;
+import static cmpe282.station.pubsub.Subscriptions.mySub;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.gcp.pubsub.core.PubSubOperations;
@@ -12,7 +12,7 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 import org.springframework.stereotype.Component;
 
-import cmpe282.pubsub.inbound.CmpeSubscriber;
+import cmpe282.station.pubsub.CmpeSubscriber;
 import cmpe282.station.pubsub.msghandler.StationMsgHandler;
 
 @Component
