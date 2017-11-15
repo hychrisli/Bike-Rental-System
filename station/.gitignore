@@ -2,3 +2,9 @@
 /.settings/
 .classpath
 /target/
+
+/.mvn/
+mvnw
+mvnw.cmd
+/pubsub/.settings/
+/cassandra/.settings/
