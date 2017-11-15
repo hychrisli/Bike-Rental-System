@@ -11,11 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import cmpe282.message.ReservRequestMsg;
 import cmpe282.station.config.JsonResponse;
 import cmpe282.station.entity.Station;
 import cmpe282.station.service.StationService;
@@ -29,13 +31,17 @@ public class StationContoller extends AbstractController {
     StationService stationSvc;
 
     @GetMapping(STATION + "{station_id}")
-    public ResponseEntity<String> getStationDetail(@PathVariable int station_id) throws JsonProcessingException {
+    public ResponseEntity<Station> getStationDetail(@PathVariable int station_id) throws JsonProcessingException {
 	ObjectMapper mapper = new ObjectMapper();
-	LOGGER.info("I'm here");
 	Station station = stationSvc.findStationDetail(station_id);
 	if (station != null)
-	    return new ResponseEntity<String> (mapper.writeValueAsString(station), HttpStatus.OK);
+	    return success(station);
 
-	return new ResponseEntity<String> ("Not Found", HttpStatus.NOT_FOUND);
+	return notFound(station);
     }
+    
+/*    @PutMapping(STATION)
+    public ResponseEntity<ReservRequestMsg> reserve(){
+	
+    }*/
 }

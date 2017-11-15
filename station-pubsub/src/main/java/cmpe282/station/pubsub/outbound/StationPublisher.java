@@ -1,6 +1,6 @@
 package cmpe282.station.pubsub.outbound;
 
-import static cmpe282.station.pubsub.Topics.myTopic2;
+import static cmpe282.message.Topics.myTopic2;
 
 import org.springframework.cloud.gcp.pubsub.core.PubSubOperations;
 import org.springframework.context.annotation.Bean;
