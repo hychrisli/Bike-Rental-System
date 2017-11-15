@@ -13,6 +13,7 @@ import org.springframework.messaging.MessageHandler;
 import org.springframework.stereotype.Component;
 
 import cmpe282.station.pubsub.CmpeSubscriber;
+import cmpe282.station.pubsub.msghandler.Station2MsgHandler;
 import cmpe282.station.pubsub.msghandler.StationMsgHandler;
 
 @Component
@@ -26,7 +27,7 @@ public class StationSubscriber extends CmpeSubscriber {
     @Bean
     @ServiceActivator(inputChannel = "stationInChannel")
     public MessageHandler stationMsgReceiver() {
-	return new StationMsgHandler();
+	return new Station2MsgHandler();
     }
 
     @Bean
