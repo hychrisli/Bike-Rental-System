@@ -5,6 +5,7 @@ public enum Topics {
     // Proof of Concept
     myTopic,
     myTopic2,
-    TOPIC_RESERVATION_REQUEST,
-    TOPIC_RESERVATION_RESPONSE
+    TOPIC_RESERVATION,
+    TOPIC_CONFIRMATION,
+    TOPIC_COMPLETION
 }

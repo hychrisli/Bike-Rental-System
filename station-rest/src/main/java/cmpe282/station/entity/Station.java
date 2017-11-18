@@ -9,10 +9,6 @@ public class Station implements Serializable{
     
     private String name;
     
-    private float latitude;
-    
-    private float longitude;
-    
     private int total_docks;
     
     private int avail_bikes;
@@ -31,22 +27,6 @@ public class Station implements Serializable{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public float getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(float latitude) {
-        this.latitude = latitude;
-    }
-
-    public float getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(float logitude) {
-        this.longitude = logitude;
     }
 
     public int getTotal_docks() {
