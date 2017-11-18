@@ -2,6 +2,7 @@ package cmpe282.station.service;
 
 import cmpe282.message.ComplMsg;
 import cmpe282.message.ConfirmMsg;
+import cmpe282.message.ReservMsg;
 import cmpe282.station.entity.Station;
 
 public interface StationService {
@@ -14,7 +15,7 @@ public interface StationService {
     
     public boolean decreaseAvailBikesByOne(int stationId);
     
-    public ConfirmMsg reserveOneBike(int stationId, String txnId, String userId);
+    public ConfirmMsg reserveOneBike(ReservMsg reservMsg);
     
     public boolean checkoutOneBike(int stationId, int bikeId, String userId);
     

@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.api.core.ApiFuture;
 
-import cmpe282.message.ReservRequestMsg;
-import cmpe282.message.ReservResponseMsg;
+import cmpe282.message.ConfirmMsg;
+import cmpe282.message.ReservMsg;
 import cmpe282.station.entity.Station;
 import cmpe282.station.service.PublisherService;
 import cmpe282.station.service.StationService;
@@ -51,8 +51,8 @@ public class StationContoller extends AbstractController {
 
     @ApiOperation(value = "Reserve a bike")
     @PostMapping(STATION)
-    public ResponseEntity<ReservResponseMsg> reserveBike(@RequestBody ReservRequestMsg reserveRequestMsg) {
-	return null;
+    public ResponseEntity<ConfirmMsg> reserveBike(@RequestBody ReservMsg reservMsg ) {
+	return success(stationSvc.reserveOneBike(reservMsg));
     }
 
     @ApiOperation(value = "Publish a message")

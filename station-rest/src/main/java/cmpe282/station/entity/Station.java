@@ -1,24 +1,31 @@
 package cmpe282.station.entity;
 
-import java.io.Serializable;
+import org.springframework.cassandra.core.PrimaryKeyType;
+import org.springframework.data.cassandra.mapping.Column;
+import org.springframework.data.cassandra.mapping.PrimaryKeyColumn;
+import org.springframework.data.cassandra.mapping.Table;
 
-public class Station implements Serializable{
-    private static final long serialVersionUID = -5510042904214265933L;
+@Table
+public class Station {
 
-    private int station_id;
+    @PrimaryKeyColumn(name="station_id", type = PrimaryKeyType.PARTITIONED)
+    private int stationId;
     
+    @Column
     private String name;
     
-    private int total_docks;
+    @Column(value="total_docks")
+    private int totalDocks;
     
-    private int avail_bikes;
+    @Column(value="avail_bikes")
+    private int availBikes;
 
-    public int getStation_id() {
-        return station_id;
+    public int getStationId() {
+        return stationId;
     }
 
-    public void setStation_id(int station_id) {
-        this.station_id = station_id;
+    public void setStationId(int stationId) {
+        this.stationId = stationId;
     }
 
     public String getName() {
@@ -29,20 +36,22 @@ public class Station implements Serializable{
         this.name = name;
     }
 
-    public int getTotal_docks() {
-        return total_docks;
+    public int getTotalDocks() {
+        return totalDocks;
     }
 
-    public void setTotal_docks(int total_docks) {
-        this.total_docks = total_docks;
+    public void setTotalDocks(int totalDocks) {
+        this.totalDocks = totalDocks;
     }
 
-    public int getAvail_bikes() {
-        return avail_bikes;
+    public int getAvailBikes() {
+        return availBikes;
     }
 
-    public void setAvail_bikes(int avail_bikes) {
-        this.avail_bikes = avail_bikes;
+    public void setAvailBikes(int availBikes) {
+        this.availBikes = availBikes;
     }
+
+
     
 }

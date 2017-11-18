@@ -12,43 +12,43 @@ public class ConfirmMsg {
     
     private int station_id;
 
-    public String getTransaction_id() {
+    public String getTransactionId() {
         return transaction_id;
     }
 
-    public void setTransaction_id(String transaction_id) {
+    public void setTransactionId(String transaction_id) {
         this.transaction_id = transaction_id;
     }
 
-    public String getUser_id() {
+    public String getUserId() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUserId(String user_id) {
         this.user_id = user_id;
     }
 
-    public boolean isIs_reserved() {
+    public boolean isReserved() {
         return is_reserved;
     }
 
-    public void setIs_reserved(boolean is_reserved) {
+    public void setReserved(boolean is_reserved) {
         this.is_reserved = is_reserved;
     }
 
-    public int getBike_id() {
+    public int getBikeId() {
         return bike_id;
     }
 
-    public void setBike_id(int bike_id) {
+    public void setBikeId(int bike_id) {
         this.bike_id = bike_id;
     }
 
-    public int getStation_id() {
+    public int getStationId() {
         return station_id;
     }
 
-    public void setStation_id(int station_id) {
+    public void setStationId(int station_id) {
         this.station_id = station_id;
     }
     

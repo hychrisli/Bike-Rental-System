@@ -4,38 +4,46 @@ import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cmpe282.message.ComplMsg;
 import cmpe282.message.ConfirmMsg;
+import cmpe282.message.ReservMsg;
+import cmpe282.station.entity.Bike;
 import cmpe282.station.entity.Station;
+import cmpe282.station.mapper.ConfirmMsgMapper;
 import cmpe282.station.mapper.MapIdMapper;
 import cmpe282.station.repository.StationRepository;
+import cmpe282.station.service.BikeService;
 import cmpe282.station.service.StationService;
 
 @Service
+@Transactional
 public class StationServiceImpl implements StationService {
 
-    private static Logger LOGGER = Logger.getLogger(StationServiceImpl.class.getName());
+    // private static Logger LOGGER = Logger.getLogger(StationServiceImpl.class.getName());
     
     @Autowired
-    private StationRepository repo;
+    private StationRepository stationRepo;
+    
+    @Autowired
+    private BikeService bikeSvc;
     
     @Override
-    public Station getStation(int station_id) {
-	LOGGER.info("My station Id" + station_id);
-	return repo.findOne(MapIdMapper.toMapId("station_id", station_id));
+    public Station getStation(int stationId) {
+	return stationRepo.findOne(MapIdMapper.toMapId("stationId", stationId));
     }
 
     @Override
     public boolean updateAvailBikes(int stationId, int delta) {
 	Station station = getStation(stationId);
-	int availBikes = station.getAvail_bikes() + delta;
+	int availBikes = station.getAvailBikes() + delta;
 	
-	if ( availBikes < 0 || availBikes > station.getTotal_docks())
+	if ( availBikes < 0 || availBikes > station.getTotalDocks())
 	    return false;
 	
-	station.setAvail_bikes(availBikes);
-	repo.save(station);
+	station.setAvailBikes(availBikes);
+	stationRepo.save(station);
 	return true;
     }
 
@@ -50,9 +58,22 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public ConfirmMsg reserveOneBike(int stationId, String txnId, String userId) {
-	// TODO Auto-generated method stub
-	return null;
+    public ConfirmMsg reserveOneBike(ReservMsg reservMsg) {
+	
+	Station station = getStation(reservMsg.getStationId());
+	
+	if (station == null || station.getAvailBikes() < 1)
+	    return ConfirmMsgMapper.toNotOkMsg(reservMsg);
+	
+	Bike bike = bikeSvc.reserveBike(
+		reservMsg.getStationId(), 
+		reservMsg.getTransactionId(), 
+		reservMsg.getUserId());
+	    
+	if (bike != null && decreaseAvailBikesByOne(bike.getStationId()))
+	    return ConfirmMsgMapper.toOkMsg(bike);
+	
+	return ConfirmMsgMapper.toNotOkMsg(reservMsg);
     }
 
     @Override

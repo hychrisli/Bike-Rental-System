@@ -1,60 +1,66 @@
 package cmpe282.station.entity;
 
-import java.io.Serializable;
+import org.springframework.cassandra.core.PrimaryKeyType;
+import org.springframework.data.cassandra.mapping.Column;
+import org.springframework.data.cassandra.mapping.PrimaryKeyColumn;
+import org.springframework.data.cassandra.mapping.Table;
 
-public class Bike implements Serializable {
-
-    private static final long serialVersionUID = -2285178458169818520L;
+@Table
+public class Bike{
     
-    private int bike_id;
+    @PrimaryKeyColumn(name="bike_id",  ordinal = 1, type = PrimaryKeyType.PARTITIONED)
+    private int bikeId;
     
-    private int station_id;
+    @PrimaryKeyColumn(name = "station_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
+    private int stationId;
     
-    private boolean is_reserved;
+    @Column(value="is_reserved")
+    private boolean isReserved;
     
-    private String txn_id;
+    @Column(value="txn_id")
+    private String txnId;
     
-    private String user_id;
+    @Column(value="user_id")
+    private String userId;
 
-    public int getBike_id() {
-        return bike_id;
+    public int getBikeId() {
+        return bikeId;
     }
 
-    public void setBike_id(int bike_id) {
-        this.bike_id = bike_id;
+    public void setBikeId(int bikeId) {
+        this.bikeId = bikeId;
     }
 
-    public int getStation_id() {
-        return station_id;
+    public int getStationId() {
+        return stationId;
     }
 
-    public void setStation_id(int station_id) {
-        this.station_id = station_id;
+    public void setStationId(int stationId) {
+        this.stationId = stationId;
     }
 
-    public boolean isIs_reserved() {
-        return is_reserved;
+    public boolean isReserved() {
+        return isReserved;
     }
 
-    public void setIs_reserved(boolean is_reserved) {
-        this.is_reserved = is_reserved;
+    public void setReserved(boolean isReserved) {
+        this.isReserved = isReserved;
     }
 
-    public String getTxn_id() {
-        return txn_id;
+    public String getTxnId() {
+        return txnId;
     }
 
-    public void setTxn_id(String txn_id) {
-        this.txn_id = txn_id;
+    public void setTxnId(String txnId) {
+        this.txnId = txnId;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
-    
     
 }

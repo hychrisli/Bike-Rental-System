@@ -3,7 +3,7 @@ CREATE KEYSPACE brs WITH replication={'class': 'SimpleStrategy', 'replication_fa
 USE brs;
 
 CREATE TABLE Station ( station_id INT, name TEXT, total_docks INT, avail_bikes INT, PRIMARY KEY (station_id));
-CREATE TABLE Bike (bike_id INT, station_id INT, is_reserved BOOLEAN, user_id TEXT, txn_id TEXT, PRIMARY KEY (bike_id));
+CREATE TABLE Bike (bike_id INT, station_id INT, is_reserved BOOLEAN, user_id TEXT, txn_id TEXT, PRIMARY KEY ((station_id, bike_id)));
 CREATE TABLE RentHist (txn_id TEXT, bike_id INT, user_id TEXT, from_station_id INT, to_station_id INT, checkout_time TIMESTAMP, checkin_time TIMESTAMP, PRIMARY KEY (txn_id));
 
 

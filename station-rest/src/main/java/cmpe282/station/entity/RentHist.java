@@ -1,72 +1,81 @@
 package cmpe282.station.entity;
 
-import java.io.Serializable;
+
 import java.sql.Timestamp;
 
-public class RentHist implements Serializable {
+import org.springframework.cassandra.core.PrimaryKeyType;
+import org.springframework.data.cassandra.mapping.Column;
+import org.springframework.data.cassandra.mapping.PrimaryKeyColumn;
+import org.springframework.data.cassandra.mapping.Table;
+
+@Table
+public class RentHist{
+
+    @PrimaryKeyColumn(name="txn_id", type = PrimaryKeyType.PARTITIONED)
+    private String txnId;
     
-    private static final long serialVersionUID = -1751988850698368935L;
-
-    private String txn_id;
+    @Column(value="bike_id")
+    private int bikeId;
     
-    private int bike_id;
+    @Column(value="from_station_id")
+    private int fromStatioId;
     
-    private int from_station_id;
+    @Column(value="checkout_time")
+    private Timestamp checkoutTime;
     
-    private Timestamp checkout_time;
+    @Column(value="to_station_id")
+    private int toStationDd;
     
-    private int to_station_id;
-    
-    private Timestamp checkin_time;
+    @Column(value="checkin_time")
+    private Timestamp checkinTime;
 
-    public String getTxn_id() {
-        return txn_id;
+    public String getTxnId() {
+        return txnId;
     }
 
-    public void setTxn_id(String txn_id) {
-        this.txn_id = txn_id;
+    public void setTxnId(String txnId) {
+        this.txnId = txnId;
     }
 
-    public int getBike_id() {
-        return bike_id;
+    public int getBikeId() {
+        return bikeId;
     }
 
-    public void setBike_id(int bike_id) {
-        this.bike_id = bike_id;
+    public void setBikeId(int bikeId) {
+        this.bikeId = bikeId;
     }
 
-    public int getFrom_station_id() {
-        return from_station_id;
+    public int getFromStatioId() {
+        return fromStatioId;
     }
 
-    public void setFrom_station_id(int from_station_id) {
-        this.from_station_id = from_station_id;
+    public void setFromStatioId(int fromStatioId) {
+        this.fromStatioId = fromStatioId;
     }
 
-    public Timestamp getCheckout_time() {
-        return checkout_time;
+    public Timestamp getCheckoutTime() {
+        return checkoutTime;
     }
 
-    public void setCheckout_time(Timestamp checkout_time) {
-        this.checkout_time = checkout_time;
+    public void setCheckoutTime(Timestamp checkoutTime) {
+        this.checkoutTime = checkoutTime;
     }
 
-    public int getTo_station_id() {
-        return to_station_id;
+    public int getToStationDd() {
+        return toStationDd;
     }
 
-    public void setTo_station_id(int to_station_id) {
-        this.to_station_id = to_station_id;
+    public void setToStationDd(int toStationDd) {
+        this.toStationDd = toStationDd;
     }
 
-    public Timestamp getCheckin_time() {
-        return checkin_time;
+    public Timestamp getCheckinTime() {
+        return checkinTime;
     }
 
-    public void setCheckin_time(Timestamp checkin_time) {
-        this.checkin_time = checkin_time;
+    public void setCheckinTime(Timestamp checkinTime) {
+        this.checkinTime = checkinTime;
     }
-    
-    
+
     
 }

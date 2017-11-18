@@ -8,27 +8,27 @@ public class ComplMsg {
     
     private float grand_total;
 
-    public String getTransaction_id() {
+    public String getTransactionId() {
         return transaction_id;
     }
 
-    public void setTransaction_id(String transaction_id) {
+    public void setTransactionId(String transaction_id) {
         this.transaction_id = transaction_id;
     }
 
-    public String getUser_id() {
+    public String getUserId() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUserId(String user_id) {
         this.user_id = user_id;
     }
 
-    public float getGrand_total() {
+    public float getGrandTotal() {
         return grand_total;
     }
 
-    public void setGrand_total(float grand_total) {
+    public void setGrandTotal(float grand_total) {
         this.grand_total = grand_total;
     }
     
