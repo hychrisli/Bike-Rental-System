@@ -27,21 +27,26 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public void updateAvailBikes(int stationId, int availBikes) {
-	// TODO Auto-generated method stub
+    public boolean updateAvailBikes(int stationId, int delta) {
+	Station station = getStation(stationId);
+	int availBikes = station.getAvail_bikes() + delta;
 	
+	if ( availBikes < 0 || availBikes > station.getTotal_docks())
+	    return false;
+	
+	station.setAvail_bikes(availBikes);
+	repo.save(station);
+	return true;
     }
 
     @Override
-    public void increaseAvailBikesByOne(int stationId) {
-	// TODO Auto-generated method stub
-	
+    public boolean increaseAvailBikesByOne(int stationId) {
+	return updateAvailBikes(stationId, 1);
     }
 
     @Override
-    public void decreaseAvailBikesByOne(int stationId) {
-	// TODO Auto-generated method stub
-	
+    public boolean decreaseAvailBikesByOne(int stationId) {
+	return updateAvailBikes(stationId, -1);
     }
 
     @Override

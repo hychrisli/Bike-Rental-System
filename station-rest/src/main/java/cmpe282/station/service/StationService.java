@@ -8,11 +8,11 @@ public interface StationService {
     
     public Station getStation(int stationId);
     
-    public void updateAvailBikes(int stationId, int availBikes);
+    public boolean updateAvailBikes(int stationId, int delta);
     
-    public void increaseAvailBikesByOne(int stationId);
+    public boolean increaseAvailBikesByOne(int stationId);
     
-    public void decreaseAvailBikesByOne(int stationId);
+    public boolean decreaseAvailBikesByOne(int stationId);
     
     public ConfirmMsg reserveOneBike(int stationId, String txnId, String userId);
     

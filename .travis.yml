@@ -1,0 +1,5 @@
+language: java
+script:
+	- mvn -f message/pom.xml install	
+	- mvn -f station-pubsub/pom.xml test -B
+	- mvn -f station-rest/pom.xml test -B
