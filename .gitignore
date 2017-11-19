@@ -2,7 +2,9 @@ userapi/*
 !userapi/src/
 userapi/src/*
 !userapi/src/userapi/
-!userapi/src/pubsub/
+!userapi/src/pubsub.pub/
+!userapi/src/pubsub.sub/
+!userapi/src/pubsub.example/
 
 # Compiled class file
 *.class
