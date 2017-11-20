@@ -41,7 +41,7 @@ public class StationContoller extends AbstractController {
 
     @ApiOperation(value = "Get Station Detail by ID")
     @GetMapping(STATION + "{station_id}")
-    public ResponseEntity<Station> getStationDetail(@PathVariable int station_id) throws JsonProcessingException {
+    public ResponseEntity<Station> getStationDetail(@PathVariable String station_id) throws JsonProcessingException {
 	Station station = stationSvc.getStation(station_id);
 	if (station != null)
 	    return success(station);

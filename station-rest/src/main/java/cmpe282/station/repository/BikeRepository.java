@@ -11,5 +11,5 @@ import cmpe282.station.entity.Bike;
 public interface BikeRepository extends CrudRepository<Bike, MapId> {
 
     @Query("SELECT * FROM Bike WHERE station_id = ?0 and is_reserved = false LIMIT 1 ALLOW FILTERING")
-    public Bike findOneBike(int stationId);
+    public Bike findOneBike(String stationId);
 }

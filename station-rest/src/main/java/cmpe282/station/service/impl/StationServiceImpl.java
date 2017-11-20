@@ -30,12 +30,12 @@ public class StationServiceImpl implements StationService {
     private BikeService bikeSvc;
     
     @Override
-    public Station getStation(int stationId) {
+    public Station getStation(String stationId) {
 	return stationRepo.findOne(MapIdMapper.toMapId("stationId", stationId));
     }
 
     @Override
-    public boolean updateAvailBikes(int stationId, int delta) {
+    public boolean updateAvailBikes(String stationId, int delta) {
 	Station station = getStation(stationId);
 	int availBikes = station.getAvailBikes() + delta;
 	
@@ -48,12 +48,12 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public boolean increaseAvailBikesByOne(int stationId) {
+    public boolean increaseAvailBikesByOne(String stationId) {
 	return updateAvailBikes(stationId, 1);
     }
 
     @Override
-    public boolean decreaseAvailBikesByOne(int stationId) {
+    public boolean decreaseAvailBikesByOne(String stationId) {
 	return updateAvailBikes(stationId, -1);
     }
 
@@ -77,13 +77,13 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public boolean checkoutOneBike(int stationId, int bikeId, String userId) {
+    public boolean checkoutOneBike(String stationId, String bikeId, String userId) {
 	// TODO Auto-generated method stub
 	return false;
     }
 
     @Override
-    public ComplMsg checkinOneBike(int stationId, int bikeId, String userId) {
+    public ComplMsg checkinOneBike(String stationId, String bikeId, String userId) {
 	// TODO Auto-generated method stub
 	return null;
     }

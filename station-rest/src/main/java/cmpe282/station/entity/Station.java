@@ -9,7 +9,7 @@ import org.springframework.data.cassandra.mapping.Table;
 public class Station {
 
     @PrimaryKeyColumn(name="station_id", type = PrimaryKeyType.PARTITIONED)
-    private int stationId;
+    private String stationId;
     
     @Column
     private String name;
@@ -20,11 +20,11 @@ public class Station {
     @Column(value="avail_bikes")
     private int availBikes;
 
-    public int getStationId() {
+    public String getStationId() {
         return stationId;
     }
 
-    public void setStationId(int stationId) {
+    public void setStationId(String stationId) {
         this.stationId = stationId;
     }
 

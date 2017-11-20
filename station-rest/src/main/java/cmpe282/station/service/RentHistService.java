@@ -7,7 +7,7 @@ public interface RentHistService {
 
     public RentHist getRentHist(String txnId);
     
-    public RentHist addBikeCheckout(Bike bike, int StationId);
+    public RentHist addBikeCheckout(Bike bike, String StationId);
     
-    public RentHist updateBikeCheckin(int bikeId, int stationId, String userId);
+    public RentHist updateBikeCheckin(String bikeId, String stationId, String userId);
 }

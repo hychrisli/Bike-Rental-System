@@ -1,7 +1,6 @@
 package cmpe282.station.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.cassandra.repository.MapId;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +17,12 @@ public class BikeServiceImpl implements BikeService {
     BikeRepository bikeRepo;
     
     @Override
-    public Bike getBike(int bikeId) {
+    public Bike getBike(String bikeId) {
 	return bikeRepo.findOne(MapIdMapper.toMapId("bikeId", bikeId));
     }
 
     @Override
-    public Bike reserveBike(int stationId, String txnId, String userId) {
+    public Bike reserveBike(String stationId, String txnId, String userId) {
 	Bike bike = bikeRepo.findOneBike(stationId);
 
 	if (bike == null)
@@ -38,13 +37,13 @@ public class BikeServiceImpl implements BikeService {
     }
 
     @Override
-    public boolean checkoutBike(int userId, int bikeId, int stationId) {
+    public boolean checkoutBike(String userId, String bikeId, String stationId) {
 	// TODO Auto-generated method stub
 	return false;
     }
 
     @Override
-    public boolean checkinBike(int userId, int bikeId, int stationId) {
+    public boolean checkinBike(String userId, String bikeId, String stationId) {
 	// TODO Auto-generated method stub
 	return false;
     }

@@ -15,16 +15,16 @@ public class RentHist{
     private String txnId;
     
     @Column(value="bike_id")
-    private int bikeId;
+    private String bikeId;
     
     @Column(value="from_station_id")
-    private int fromStatioId;
+    private String fromStatioId;
     
     @Column(value="checkout_time")
     private Timestamp checkoutTime;
     
     @Column(value="to_station_id")
-    private int toStationDd;
+    private String toStationDd;
     
     @Column(value="checkin_time")
     private Timestamp checkinTime;
@@ -37,19 +37,19 @@ public class RentHist{
         this.txnId = txnId;
     }
 
-    public int getBikeId() {
+    public String getBikeId() {
         return bikeId;
     }
 
-    public void setBikeId(int bikeId) {
+    public void setBikeId(String bikeId) {
         this.bikeId = bikeId;
     }
 
-    public int getFromStatioId() {
+    public String getFromStatioId() {
         return fromStatioId;
     }
 
-    public void setFromStatioId(int fromStatioId) {
+    public void setFromStatioId(String fromStatioId) {
         this.fromStatioId = fromStatioId;
     }
 
@@ -61,11 +61,11 @@ public class RentHist{
         this.checkoutTime = checkoutTime;
     }
 
-    public int getToStationDd() {
+    public String getToStationDd() {
         return toStationDd;
     }
 
-    public void setToStationDd(int toStationDd) {
+    public void setToStationDd(String toStationDd) {
         this.toStationDd = toStationDd;
     }
 

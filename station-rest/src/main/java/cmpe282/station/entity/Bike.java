@@ -9,10 +9,10 @@ import org.springframework.data.cassandra.mapping.Table;
 public class Bike{
     
     @PrimaryKeyColumn(name="bike_id",  ordinal = 1, type = PrimaryKeyType.PARTITIONED)
-    private int bikeId;
+    private String bikeId;
     
     @PrimaryKeyColumn(name = "station_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
-    private int stationId;
+    private String stationId;
     
     @Column(value="is_reserved")
     private boolean isReserved;
@@ -23,19 +23,19 @@ public class Bike{
     @Column(value="user_id")
     private String userId;
 
-    public int getBikeId() {
+    public String getBikeId() {
         return bikeId;
     }
 
-    public void setBikeId(int bikeId) {
+    public void setBikeId(String bikeId) {
         this.bikeId = bikeId;
     }
 
-    public int getStationId() {
+    public String getStationId() {
         return stationId;
     }
 
-    public void setStationId(int stationId) {
+    public void setStationId(String stationId) {
         this.stationId = stationId;
     }
 

@@ -4,7 +4,7 @@ public class ReservMsg {
     
     private String transaction_id;
     private String user_id;
-    private int station_id;
+    private String station_id;
     
     public String getTransactionId() {
         return transaction_id;
@@ -18,10 +18,10 @@ public class ReservMsg {
     public void setUserId(String user_id) {
         this.user_id = user_id;
     }
-    public int getStationId() {
+    public String getStationId() {
         return station_id;
     }
-    public void setStationId(int station_id) {
+    public void setStationId(String station_id) {
         this.station_id = station_id;
     }
     

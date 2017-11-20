@@ -25,7 +25,7 @@ public class ConfirmMsgMapper {
 	msg.setTransactionId(reservMsg.getTransactionId());
 	msg.setUserId(reservMsg.getUserId());
 	msg.setReserved(false);
-	msg.setBikeId(0);
+	msg.setBikeId("");
 	
 	return msg;
     }

@@ -34,19 +34,19 @@ public class AbstractStationServiceTest {
     private void initStations(){
 
 	station0 = new Station();
-	station0.setStationId(10);
+	station0.setStationId("s010");
 	station0.setName("No Bike Station");
 	station0.setTotalDocks(2);
 	station0.setAvailBikes(0);
 	
 	station1 = new Station();
-	station1.setStationId(11);
+	station1.setStationId("s011");
 	station1.setName("One Bike Station");
 	station1.setTotalDocks(4);
 	station1.setAvailBikes(1);
 	
 	station2 = new Station();
-	station2.setStationId(12);
+	station2.setStationId("s12");
 	station2.setName("Two Bike Station");
 	station2.setTotalDocks(3);
 	station2.setAvailBikes(2);
@@ -57,7 +57,7 @@ public class AbstractStationServiceTest {
     private void initBikes(){
 	
 	bike1 = new Bike();
-	bike1.setBikeId(1);
+	bike1.setBikeId("b0001");
 	bike1.setStationId(station1.getStationId());
 	bike1.setReserved(false);
 	
@@ -71,7 +71,7 @@ public class AbstractStationServiceTest {
 	
 	
 	bike2 = new Bike();
-	bike2.setBikeId(2);
+	bike2.setBikeId("b0002");
 	bike2.setStationId(station2.getStationId());
 	bike2.setReserved(false);
     }
@@ -103,7 +103,7 @@ public class AbstractStationServiceTest {
 	confirmFailMsgNoBike.setStationId(station0.getStationId());
 	confirmFailMsgNoBike.setTransactionId(txnId1);
 	confirmFailMsgNoBike.setReserved(false);
-	confirmFailMsgNoBike.setBikeId(0);
+	confirmFailMsgNoBike.setBikeId("");
 	confirmFailMsgNoBike.setUserId(userId1);
 	
     }
