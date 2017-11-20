@@ -27,8 +27,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	topics := []string{topicReservation, topicConfirmation, topicCompletion}
-	subscriptions := []string{subReservation, subConfirmation, subCompletion}
+	// topics := []string{topicReservation, topicConfirmation, topicCompletion}
+	// subscriptions := []string{subReservation, subConfirmation, subCompletion}
+
+	topics := []string{topicReservation}
+	subscriptions := []string{subReservation}
 
 	for i, topic := range topics {
 		fmt.Printf("Current index %v\n", i)
@@ -115,7 +118,7 @@ func pullMsgs(client *pubsub.Client, name string, topic *pubsub.Topic) error {
 		mu.Lock()
 		defer mu.Unlock()
 		received++
-		fmt.Printf("Got message: %q from %v number %v\n", string(msg.Data), name, received)
+		fmt.Printf("Got message: %q from %+v number %v\n", string(msg.Data), name, received)
 		msg.Ack()
 	})
 	if err != nil {

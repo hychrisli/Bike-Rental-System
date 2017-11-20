@@ -27,8 +27,23 @@ func main() {
 		fmt.Fprintf(os.Stderr, "GOOGLE_CLOUD_PROJECT environment variable must be set.\n")
 		os.Exit(1)
 	}
-	topics := []string{topicReservation, topicConfirmation, topicCompletion}
+	// topics := []string{topicConfirmation, topicCompletion}
 
+	// topics := []string{topicConfirmation}
+	// msg := []byte(`{
+	// 	"transaction_id": "4989a28e-387a-4c2c-8922-7cfbaeee0bb5",
+	// 	"user_id": "1",
+	// 	"is_reserved": true,
+	// 	"bike_id": "10",
+	// 	"station_id": "10"
+	//  }`)
+
+	topics := []string{topicCompletion}
+	msg := []byte(`{
+		"transaction_id": "4989a28e-387a-4c2c-8922-7cfbaeee0bb5",
+		"user_id": "1",
+		"grand_total": 10
+	 }`)
 	for _, topic := range topics {
 		ctx := context.Background()
 		client, err := pubsub.NewClient(ctx, proj)
@@ -36,23 +51,20 @@ func main() {
 			log.Fatalf("Could not create pubsub Client: %v", err)
 		}
 		t := createTopicIfNotExists(client, topic)
-
-		if err := publish(t, "hello world from "+topic); err != nil {
+		if err := publish(t, msg); err != nil {
 			log.Fatalf("Failed to publish: %v", err)
 		}
 	}
 
 }
 
-func publish(topic *pubsub.Topic, msg string) error {
+func publish(topic *pubsub.Topic, msg []byte) error {
 	ctx := context.Background()
-	// [START publish]
 
 	result := topic.Publish(ctx, &pubsub.Message{
-		Data: []byte(msg),
+		Data: msg,
 	})
-	// Block until the result is returned and a server-generated
-	// ID is returned for the published message.
+
 	id, err := result.Get(ctx)
 	if err != nil {
 		return err
@@ -65,7 +77,6 @@ func publish(topic *pubsub.Topic, msg string) error {
 func createTopicIfNotExists(c *pubsub.Client, topic string) *pubsub.Topic {
 	ctx := context.Background()
 
-	// Create a topic to subscribe to.
 	t := c.Topic(topic)
 	ok, err := t.Exists(ctx)
 	if err != nil {
