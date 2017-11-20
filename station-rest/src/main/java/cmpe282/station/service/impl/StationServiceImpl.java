@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import cmpe282.message.ComplMsg;
 import cmpe282.message.ConfirmMsg;
 import cmpe282.message.ReservMsg;
-import cmpe282.station.entity.Bike;
+import cmpe282.station.entity.StationBike;
+import cmpe282.station.entity.RsvdBike;
 import cmpe282.station.entity.Station;
 import cmpe282.station.mapper.ConfirmMsgMapper;
 import cmpe282.station.mapper.MapIdMapper;
@@ -65,25 +66,25 @@ public class StationServiceImpl implements StationService {
 	if (station == null || station.getAvailBikes() < 1)
 	    return ConfirmMsgMapper.toNotOkMsg(reservMsg);
 	
-	Bike bike = bikeSvc.reserveBike(
+	RsvdBike rsvdBike = bikeSvc.rsvBike(
 		reservMsg.getStationId(), 
 		reservMsg.getTransactionId(), 
 		reservMsg.getUserId());
 	    
-	if (bike != null && decreaseAvailBikesByOne(bike.getStationId()))
-	    return ConfirmMsgMapper.toOkMsg(bike);
+	if (rsvdBike != null && decreaseAvailBikesByOne(rsvdBike.getStationId()))
+	    return ConfirmMsgMapper.toOkMsg(rsvdBike);
 	
 	return ConfirmMsgMapper.toNotOkMsg(reservMsg);
     }
 
     @Override
-    public boolean checkoutOneBike(String stationId, String bikeId, String userId) {
+    public boolean checkoutOneBike(String userId) {
 	// TODO Auto-generated method stub
 	return false;
     }
 
     @Override
-    public ComplMsg checkinOneBike(String stationId, String bikeId, String userId) {
+    public ComplMsg checkinOneBike(String stationId, String bikeId) {
 	// TODO Auto-generated method stub
 	return null;
     }

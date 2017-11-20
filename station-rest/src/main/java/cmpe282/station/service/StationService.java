@@ -17,9 +17,9 @@ public interface StationService {
     
     public ConfirmMsg reserveOneBike(ReservMsg reservMsg);
     
-    public boolean checkoutOneBike(String stationId, String bikeId, String userId);
+    public boolean checkoutOneBike(String userId);
     
-    public ComplMsg checkinOneBike(String stationId, String bikeId, String userId);
+    public ComplMsg checkinOneBike(String stationId, String bikeId);
     
 
 }

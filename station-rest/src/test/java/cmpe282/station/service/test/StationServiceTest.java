@@ -46,14 +46,14 @@ public class StationServiceTest extends AbstractStationServiceTest {
 	
 	MapId stationMapId0 = MapIdMapper.toMapId("stationId", confirmFailMsgNoBike.getStationId());
 	Mockito.when(stationRepo.findOne(refEq(stationMapId0))).thenReturn(station0);
-	Mockito.when(bikeSvc.reserveBike(
+	Mockito.when(bikeSvc.rsvBike(
 		confirmFailMsgNoBike.getStationId(), 
 		confirmFailMsgNoBike.getTransactionId(), 
 		confirmFailMsgNoBike.getUserId())).thenReturn(null);
 	
 	MapId stationMapId1 = MapIdMapper.toMapId("stationId", confirmOkMsg.getStationId());
 	Mockito.when(stationRepo.findOne(refEq(stationMapId1))).thenReturn(station1);
-	Mockito.when(bikeSvc.reserveBike(
+	Mockito.when(bikeSvc.rsvBike(
 		confirmOkMsg.getStationId(), 
 		confirmOkMsg.getTransactionId(),
 		confirmOkMsg.getUserId())).thenReturn(bike1Rsvd);

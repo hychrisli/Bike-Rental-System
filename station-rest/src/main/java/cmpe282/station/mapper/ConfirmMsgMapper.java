@@ -2,11 +2,11 @@ package cmpe282.station.mapper;
 
 import cmpe282.message.ConfirmMsg;
 import cmpe282.message.ReservMsg;
-import cmpe282.station.entity.Bike;
+import cmpe282.station.entity.RsvdBike;
 
 public class ConfirmMsgMapper {
 
-    public static ConfirmMsg toOkMsg(Bike bike){
+    public static ConfirmMsg toOkMsg(RsvdBike bike){
 	
 	ConfirmMsg msg = new ConfirmMsg();
 	msg.setStationId(bike.getStationId());

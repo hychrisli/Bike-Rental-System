@@ -5,11 +5,11 @@ import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import cmpe282.station.entity.Bike;
+import cmpe282.station.entity.StationBike;
 
 @Repository
-public interface BikeRepository extends CrudRepository<Bike, MapId> {
+public interface StationBikeRepository extends CrudRepository<StationBike, MapId> {
 
-    @Query("SELECT * FROM Bike WHERE station_id = ?0 and is_reserved = false LIMIT 1 ALLOW FILTERING")
-    public Bike findOneBike(String stationId);
+    @Query("SELECT * FROM StationBike WHERE station_id = ?0 LIMIT 1 ALLOW FILTERING")
+    public StationBike findOneBike(String stationId);
 }

@@ -4,7 +4,8 @@ import org.junit.Before;
 
 import cmpe282.message.ConfirmMsg;
 import cmpe282.message.ReservMsg;
-import cmpe282.station.entity.Bike;
+import cmpe282.station.entity.StationBike;
+import cmpe282.station.entity.RsvdBike;
 import cmpe282.station.entity.Station;
 
 public class AbstractStationServiceTest {
@@ -12,7 +13,8 @@ public class AbstractStationServiceTest {
     protected Station station0, station1, station2;
     protected String userId1, userId2;
     protected String txnId1, txnId2;
-    protected Bike bike1, bike1Rsvd, bike2;
+    protected StationBike bike1, bike2;
+    protected RsvdBike bike1Rsvd;
     protected ReservMsg reservOkMsg, reservFailMsgNoBike;
     protected ConfirmMsg confirmOkMsg, confirmFailMsgNoBike;
     
@@ -46,7 +48,7 @@ public class AbstractStationServiceTest {
 	station1.setAvailBikes(1);
 	
 	station2 = new Station();
-	station2.setStationId("s12");
+	station2.setStationId("s012");
 	station2.setName("Two Bike Station");
 	station2.setTotalDocks(3);
 	station2.setAvailBikes(2);
@@ -56,24 +58,21 @@ public class AbstractStationServiceTest {
     
     private void initBikes(){
 	
-	bike1 = new Bike();
+	bike1 = new StationBike();
 	bike1.setBikeId("b0001");
 	bike1.setStationId(station1.getStationId());
-	bike1.setReserved(false);
 	
 	
-	bike1Rsvd = new Bike();
+	bike1Rsvd = new RsvdBike();
 	bike1Rsvd.setBikeId(bike1.getBikeId());
 	bike1Rsvd.setStationId(bike1.getStationId());
-	bike1Rsvd.setReserved(true);
 	bike1Rsvd.setTxnId(txnId1);
 	bike1Rsvd.setUserId(userId1);
 	
 	
-	bike2 = new Bike();
+	bike2 = new StationBike();
 	bike2.setBikeId("b0002");
 	bike2.setStationId(station2.getStationId());
-	bike2.setReserved(false);
     }
     
     private void initReservMsgs(){
