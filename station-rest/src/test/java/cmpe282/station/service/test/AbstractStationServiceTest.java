@@ -1,14 +1,15 @@
 package cmpe282.station.service.test;
 
 import java.sql.Timestamp;
+import java.util.logging.Logger;
 
 import org.junit.Before;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import cmpe282.station.entity.StationBike;
 import cmpe282.station.mapper.BikeMapper;
-import cmpe282.station.mapper.ConfirmMsgMapper;
-import cmpe282.message.mq.ConfirmMsg;
-import cmpe282.message.mq.ReservMsg;
+import cmpe282.station.mapper.FareCalculator;
 import cmpe282.station.entity.InBike;
 import cmpe282.station.entity.OutBike;
 import cmpe282.station.entity.RsvdBike;
@@ -16,6 +17,9 @@ import cmpe282.station.entity.Station;
 
 public class AbstractStationServiceTest {
 
+    protected static final ObjectMapper mapper = new ObjectMapper();
+    protected static Logger LOGGER = Logger.getLogger(AbstractStationServiceTest.class.getName());
+    
     protected Station station0, station1, station2;
     protected String userId1, userId2;
     protected String txnId1, txnId2;
@@ -24,6 +28,7 @@ public class AbstractStationServiceTest {
     protected OutBike bike1Out;
     protected InBike bike1In;
     protected Timestamp checkoutTime, checkinTime;
+    protected Float grandTotal;
     
     
     @Before
@@ -34,7 +39,8 @@ public class AbstractStationServiceTest {
 	txnId2 = "txn2";
 	checkoutTime = Timestamp.valueOf("2017-11-20 19:51:31");
 	checkinTime = Timestamp.valueOf("2017-11-20 20:21:17");
-	
+	grandTotal = FareCalculator.calcFare(checkoutTime, checkinTime);
+		
 	initStations();
 	initBikes();
 	
@@ -72,6 +78,10 @@ public class AbstractStationServiceTest {
 	bike1Rsvd = BikeMapper.toRsvdBike(bike1, userId1, txnId1);
 	bike1Out = BikeMapper.toOutBike(bike1Rsvd);
 	bike1Out.setCheckoutTime(checkoutTime);
+	bike1In = BikeMapper.toInBike(bike1Out, station0.getStationId());
+	bike1In.setCheckinTime(checkinTime);
+	bike1In.setGrandTotal(grandTotal);
+	
 	
 	bike2 = new StationBike();
 	bike2.setBikeId("b0002");

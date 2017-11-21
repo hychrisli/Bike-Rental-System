@@ -3,8 +3,6 @@ package cmpe282.station.service.test;
 import static org.mockito.Matchers.refEq;
 import static org.mockito.Mockito.times;
 
-import java.util.logging.Logger;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +12,9 @@ import org.mockito.Mockito;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import cmpe282.station.entity.InBike;
 import cmpe282.station.entity.OutBike;
 import cmpe282.station.entity.RsvdBike;
 import cmpe282.station.mapper.MapIdMapper;
@@ -26,8 +27,6 @@ import cmpe282.station.service.impl.BikeServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BikeServiceTest extends AbstractStationServiceTest {
-
-    private static Logger LOGGER = Logger.getLogger(BikeServiceTest.class.getName());
     
     @Mock
     private StationBikeRepository stationBikeRepo;
@@ -59,7 +58,7 @@ public class BikeServiceTest extends AbstractStationServiceTest {
     }
     
     @Test
-    public void testCheckOutBike(){
+    public void testCheckoutBike(){
 	Mockito
 	.when(rsvdBikeRepo.findOne(refEq(MapIdMapper.toMapId("userId", userId1))))
 	.thenReturn(bike1Rsvd);
@@ -76,4 +75,26 @@ public class BikeServiceTest extends AbstractStationServiceTest {
 	Assert.assertEquals(outBike, null);
 
     }
+    
+    @Test
+    public void testCheckinBike() throws JsonProcessingException{
+	Mockito
+	.when(outBikeRepo.findOne(refEq(MapIdMapper.toMapId("bikeId", bike1Out.getBikeId()))))
+	.thenReturn(bike1Out);
+	
+	InBike inBike = bikeSvc.checkinBike(bike1Out.getBikeId(),bike1In.getToStationId());
+	inBike.setCheckinTime(checkinTime);
+	inBike.setGrandTotal(grandTotal);
+
+	Assert.assertThat(inBike, new ReflectionEquals(bike1In));
+	
+	Mockito
+	.when(outBikeRepo.findOne(refEq(MapIdMapper.toMapId("bikeId", bike2.getBikeId()))))
+	.thenReturn(null);
+	
+	inBike = bikeSvc.checkinBike(bike2.getBikeId(), station1.getStationId());
+	Assert.assertEquals(inBike, null);
+	
+    }
+
 }

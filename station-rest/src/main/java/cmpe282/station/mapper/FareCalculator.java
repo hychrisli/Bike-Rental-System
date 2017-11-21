@@ -1,6 +1,5 @@
 package cmpe282.station.mapper;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class FareCalculator {
