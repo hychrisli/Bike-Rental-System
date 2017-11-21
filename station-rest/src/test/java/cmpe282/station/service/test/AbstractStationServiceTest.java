@@ -1,10 +1,16 @@
 package cmpe282.station.service.test;
 
+import java.sql.Timestamp;
+
 import org.junit.Before;
 
 import cmpe282.station.entity.StationBike;
+import cmpe282.station.mapper.BikeMapper;
+import cmpe282.station.mapper.ConfirmMsgMapper;
 import cmpe282.message.mq.ConfirmMsg;
 import cmpe282.message.mq.ReservMsg;
+import cmpe282.station.entity.InBike;
+import cmpe282.station.entity.OutBike;
 import cmpe282.station.entity.RsvdBike;
 import cmpe282.station.entity.Station;
 
@@ -15,8 +21,9 @@ public class AbstractStationServiceTest {
     protected String txnId1, txnId2;
     protected StationBike bike1, bike2;
     protected RsvdBike bike1Rsvd;
-    protected ReservMsg reservOkMsg, reservFailMsgNoBike;
-    protected ConfirmMsg confirmOkMsg, confirmFailMsgNoBike;
+    protected OutBike bike1Out;
+    protected InBike bike1In;
+    protected Timestamp checkoutTime, checkinTime;
     
     
     @Before
@@ -25,11 +32,11 @@ public class AbstractStationServiceTest {
 	userId2 = "user2";
 	txnId1 = "reserve-bike1";
 	txnId2 = "txn2";
+	checkoutTime = Timestamp.valueOf("2017-11-20 19:51:31");
+	checkinTime = Timestamp.valueOf("2017-11-20 20:21:17");
 	
 	initStations();
 	initBikes();
-	initReservMsgs();
-	initConfirmMsgs();
 	
     }
     
@@ -61,51 +68,13 @@ public class AbstractStationServiceTest {
 	bike1 = new StationBike();
 	bike1.setBikeId("b0001");
 	bike1.setStationId(station1.getStationId());
-	
-	
-	bike1Rsvd = new RsvdBike();
-	bike1Rsvd.setBikeId(bike1.getBikeId());
-	bike1Rsvd.setStationId(bike1.getStationId());
-	bike1Rsvd.setTxnId(txnId1);
-	bike1Rsvd.setUserId(userId1);
-	
+
+	bike1Rsvd = BikeMapper.toRsvdBike(bike1, userId1, txnId1);
+	bike1Out = BikeMapper.toOutBike(bike1Rsvd);
+	bike1Out.setCheckoutTime(checkoutTime);
 	
 	bike2 = new StationBike();
 	bike2.setBikeId("b0002");
 	bike2.setStationId(station2.getStationId());
     }
-    
-    private void initReservMsgs(){
-	
-	reservOkMsg = new ReservMsg();
-	reservOkMsg.setStationId(station1.getStationId());
-	reservOkMsg.setTransactionId(txnId1);
-	reservOkMsg.setUserId(userId1);
-	
-	reservFailMsgNoBike = new ReservMsg();
-	reservFailMsgNoBike.setStationId(station0.getStationId());
-	reservFailMsgNoBike.setTransactionId(txnId1);
-	reservFailMsgNoBike.setUserId(userId1);
-	
-    }
-    
-    private void initConfirmMsgs(){
-	
-	confirmOkMsg = new ConfirmMsg();
-	confirmOkMsg.setStationId(station1.getStationId());
-	confirmOkMsg.setTransactionId(txnId1);
-	confirmOkMsg.setReserved(true);
-	confirmOkMsg.setBikeId(bike1.getBikeId());
-	confirmOkMsg.setUserId(userId1);
-	
-	confirmFailMsgNoBike = new ConfirmMsg();
-	confirmFailMsgNoBike.setStationId(station0.getStationId());
-	confirmFailMsgNoBike.setTransactionId(txnId1);
-	confirmFailMsgNoBike.setReserved(false);
-	confirmFailMsgNoBike.setBikeId("");
-	confirmFailMsgNoBike.setUserId(userId1);
-	
-    }
-    
-    
 }

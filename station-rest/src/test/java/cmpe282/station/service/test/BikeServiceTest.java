@@ -14,7 +14,9 @@ import org.mockito.Mockito;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import cmpe282.station.entity.OutBike;
 import cmpe282.station.entity.RsvdBike;
+import cmpe282.station.mapper.MapIdMapper;
 import cmpe282.station.repository.InBikeRepository;
 import cmpe282.station.repository.OutBikeRepository;
 import cmpe282.station.repository.RsvdBikeRepository;
@@ -54,5 +56,24 @@ public class BikeServiceTest extends AbstractStationServiceTest {
 	
 	rsvdBike = bikeSvc.rsvBike(station0.getStationId(), txnId1, userId1);
 	Assert.assertEquals(null, rsvdBike);
+    }
+    
+    @Test
+    public void testCheckOutBike(){
+	Mockito
+	.when(rsvdBikeRepo.findOne(refEq(MapIdMapper.toMapId("userId", userId1))))
+	.thenReturn(bike1Rsvd);
+	
+	OutBike outBike = bikeSvc.checkoutBike(userId1);
+	outBike.setCheckoutTime(checkoutTime);
+	Assert.assertThat(outBike, new ReflectionEquals(bike1Out));
+	
+	Mockito
+	.when(rsvdBikeRepo.findOne(refEq(MapIdMapper.toMapId("userId", userId2))))
+	.thenReturn(null);
+	
+	outBike = bikeSvc.checkoutBike(userId2);
+	Assert.assertEquals(outBike, null);
+
     }
 }
