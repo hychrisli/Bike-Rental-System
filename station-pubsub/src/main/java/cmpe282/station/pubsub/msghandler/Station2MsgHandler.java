@@ -30,6 +30,8 @@ public class Station2MsgHandler implements MessageHandler {
     public void handleMessage(Message<?> msg) throws MessagingException {
 	ObjectMapper mapper = new ObjectMapper();
 	LOGGER.info(msg.getPayload().toString());
+	AckReplyConsumer consumer = (AckReplyConsumer) msg.getHeaders().get(GcpHeaders.ACKNOWLEDGEMENT);
+	consumer.ack();
 	try {
 	    StationMsg stationMsg = mapper.readValue(msg.getPayload().toString(), StationMsg.class);
 	    LOGGER.info(" " + stationMsg.getId());
@@ -41,8 +43,7 @@ public class Station2MsgHandler implements MessageHandler {
 	    // TODO Auto-generated catch block
 	    e1.printStackTrace();
 	}
-	AckReplyConsumer consumer = (AckReplyConsumer) msg.getHeaders().get(GcpHeaders.ACKNOWLEDGEMENT);
-	consumer.ack();
+
     }
 
 }

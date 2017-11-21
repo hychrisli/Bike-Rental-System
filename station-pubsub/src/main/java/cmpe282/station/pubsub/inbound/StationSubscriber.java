@@ -1,6 +1,6 @@
 package cmpe282.station.pubsub.inbound;
 
-import static cmpe282.station.pubsub.Subscriptions.mySub;
+import static cmpe282.message.Subscriptions.mySub;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.gcp.pubsub.core.PubSubOperations;

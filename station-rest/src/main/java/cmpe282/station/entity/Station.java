@@ -1,28 +1,31 @@
 package cmpe282.station.entity;
 
-import java.io.Serializable;
+import org.springframework.cassandra.core.PrimaryKeyType;
+import org.springframework.data.cassandra.mapping.Column;
+import org.springframework.data.cassandra.mapping.PrimaryKeyColumn;
+import org.springframework.data.cassandra.mapping.Table;
 
-public class Station implements Serializable{
-    private static final long serialVersionUID = -5510042904214265933L;
+@Table
+public class Station {
 
-    private int station_id;
+    @PrimaryKeyColumn(name="station_id", type = PrimaryKeyType.PARTITIONED)
+    private String stationId;
     
+    @Column
     private String name;
     
-    private float latitude;
+    @Column(value="total_docks")
+    private int totalDocks;
     
-    private float longitude;
-    
-    private int total_docks;
-    
-    private int avail_bikes;
+    @Column(value="avail_bikes")
+    private int availBikes;
 
-    public int getStation_id() {
-        return station_id;
+    public String getStationId() {
+        return stationId;
     }
 
-    public void setStation_id(int station_id) {
-        this.station_id = station_id;
+    public void setStationId(String stationId) {
+        this.stationId = stationId;
     }
 
     public String getName() {
@@ -33,36 +36,22 @@ public class Station implements Serializable{
         this.name = name;
     }
 
-    public float getLatitude() {
-        return latitude;
+    public int getTotalDocks() {
+        return totalDocks;
     }
 
-    public void setLatitude(float latitude) {
-        this.latitude = latitude;
+    public void setTotalDocks(int totalDocks) {
+        this.totalDocks = totalDocks;
     }
 
-    public float getLongitude() {
-        return longitude;
+    public int getAvailBikes() {
+        return availBikes;
     }
 
-    public void setLongitude(float logitude) {
-        this.longitude = logitude;
+    public void setAvailBikes(int availBikes) {
+        this.availBikes = availBikes;
     }
 
-    public int getTotal_docks() {
-        return total_docks;
-    }
 
-    public void setTotal_docks(int total_docks) {
-        this.total_docks = total_docks;
-    }
-
-    public int getAvail_bikes() {
-        return avail_bikes;
-    }
-
-    public void setAvail_bikes(int avail_bikes) {
-        this.avail_bikes = avail_bikes;
-    }
     
 }

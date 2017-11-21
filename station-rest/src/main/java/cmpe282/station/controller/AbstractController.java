@@ -23,12 +23,12 @@ public abstract class AbstractController extends JsonResponseHandler {
 	@Value("${server.port}")
 	private String serverPort;
 	
-	protected <T> ResponseEntity<JsonResponse> success(String key, T data){
-		return genericResponse(new JsonResponse(key, data), HttpStatus.OK);
+	protected <T> ResponseEntity<T> success(T data){
+		return new ResponseEntity<T> (data, HttpStatus.OK);
 	}
 	
-	protected ResponseEntity<JsonResponse> notFound(){
-		return genericResponse(new JsonResponse(KEY_ERROR, HttpStatus.NOT_FOUND.name()), HttpStatus.NOT_FOUND);
+	protected <T> ResponseEntity<T> notFound(T data){
+		return new ResponseEntity<T> (data, HttpStatus.NOT_FOUND);
 	}
 	
 	protected ResponseEntity<JsonResponse> created(String loc){
