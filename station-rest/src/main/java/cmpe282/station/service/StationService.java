@@ -1,5 +1,7 @@
 package cmpe282.station.service;
 
+import cmpe282.message.direct.CheckinConfirmMsg;
+import cmpe282.message.direct.CheckinReqMsg;
 import cmpe282.message.direct.CheckoutConfirmMsg;
 import cmpe282.message.direct.CheckoutReqMsg;
 import cmpe282.message.mq.ComplMsg;
@@ -21,7 +23,7 @@ public interface StationService {
     
     public CheckoutConfirmMsg checkoutOneBike(CheckoutReqMsg checkoutMsg);
     
-    public ComplMsg checkinOneBike(String stationId, String bikeId);
+    public CheckinConfirmMsg checkinOneBike(CheckinReqMsg checkinMsg);
     
 
 }

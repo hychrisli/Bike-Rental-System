@@ -31,7 +31,6 @@ public class PublisherServiceImpl implements PublisherService {
 	return publishMessage(publisher, message);
     }
 
-    
     private static ApiFuture<String> publishMessage(Publisher publisher, String message) throws Exception {
 	// convert message to bytes
 	ByteString data = ByteString.copyFromUtf8(message);

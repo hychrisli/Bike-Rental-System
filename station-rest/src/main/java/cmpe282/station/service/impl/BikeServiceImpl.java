@@ -92,8 +92,17 @@ public class BikeServiceImpl implements BikeService {
 
     @Override
     public InBike checkinBike(String bikeId, String stationId) {
-	// TODO Auto-generated method stub
-	return null;
+	OutBike outBike = getOutBike(bikeId);
+	
+	if (outBike == null) return null;
+	
+	InBike inBike = BikeMapper.toInBike(outBike, stationId);
+	StationBike stationBike = BikeMapper.toStationBike(inBike);
+	inBikeRepo.save(inBike);
+	stationBikeRepo.save(stationBike);
+	outBikeRepo.delete(outBike);
+	
+	return inBike;
     }
 
 }

@@ -2,6 +2,7 @@ package cmpe282.station.entity;
 
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import org.springframework.cassandra.core.PrimaryKeyType;
 import org.springframework.data.cassandra.mapping.Column;
@@ -24,13 +25,13 @@ public class InBike{
     private String fromStationId;
     
     @Column(value="checkout_time")
-    private Timestamp checkoutTime;
+    private Date checkoutTime;
     
     @Column(value="to_station_id")
     private String toStationId;
     
     @Column(value="checkin_time")
-    private Timestamp checkinTime;
+    private Date checkinTime;
 
     @Column(value="grand_total")
     private Float grandTotal;
@@ -51,19 +52,19 @@ public class InBike{
         this.bikeId = bikeId;
     }
 
-    public Timestamp getCheckoutTime() {
+    public Date getCheckoutTime() {
         return checkoutTime;
     }
 
-    public void setCheckoutTime(Timestamp checkoutTime) {
+    public void setCheckoutTime(Date checkoutTime) {
         this.checkoutTime = checkoutTime;
     }
 
-    public Timestamp getCheckinTime() {
+    public Date getCheckinTime() {
         return checkinTime;
     }
 
-    public void setCheckinTime(Timestamp checkinTime) {
+    public void setCheckinTime(Date checkinTime) {
         this.checkinTime = checkinTime;
     }
 

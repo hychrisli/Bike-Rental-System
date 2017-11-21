@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.api.core.ApiFuture;
 
+import cmpe282.message.direct.CheckinConfirmMsg;
+import cmpe282.message.direct.CheckinReqMsg;
 import cmpe282.message.direct.CheckoutConfirmMsg;
 import cmpe282.message.direct.CheckoutReqMsg;
 import cmpe282.message.mq.ConfirmMsg;
@@ -62,6 +64,12 @@ public class StationContoller extends AbstractController {
     public ResponseEntity<CheckoutConfirmMsg> checkoutBike(@RequestBody CheckoutReqMsg checkoutMsg ) {
 	return success(stationSvc.checkoutOneBike(checkoutMsg));
     }
+    
+    @ApiOperation(value = "Check in a bike")
+    @PostMapping(STATION + "/checkin")
+    public ResponseEntity<CheckinConfirmMsg> checkinBike(@RequestBody CheckinReqMsg checkinMsg ) {
+	return success(stationSvc.checkinOneBike(checkinMsg));
+    }
 
     @ApiOperation(value = "Publish a message")
     @PostMapping(STATION + "/publish")
@@ -69,7 +77,4 @@ public class StationContoller extends AbstractController {
 	ApiFuture<String> messageId = pubSvc.publishMessage(TOPIC_RESERVATION.name(), msg);
 	return success(messageId.get());
     }
-
-
-
 }

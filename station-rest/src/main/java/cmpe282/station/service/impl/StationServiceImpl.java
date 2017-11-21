@@ -6,15 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cmpe282.message.direct.CheckinConfirmMsg;
+import cmpe282.message.direct.CheckinReqMsg;
 import cmpe282.message.direct.CheckoutConfirmMsg;
 import cmpe282.message.direct.CheckoutReqMsg;
-import cmpe282.message.mq.ComplMsg;
 import cmpe282.message.mq.ConfirmMsg;
 import cmpe282.message.mq.ReservMsg;
+import cmpe282.station.entity.InBike;
 import cmpe282.station.entity.OutBike;
 import cmpe282.station.entity.RsvdBike;
 import cmpe282.station.entity.Station;
 import cmpe282.station.mapper.CheckoutMsgMapper;
+import cmpe282.station.mapper.ComplMsgMapper;
 import cmpe282.station.mapper.ConfirmMsgMapper;
 import cmpe282.station.mapper.MapIdMapper;
 import cmpe282.station.repository.StationRepository;
@@ -88,8 +91,15 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public ComplMsg checkinOneBike(String stationId, String bikeId) {
-	// TODO Auto-generated method stub
-	return null;
+    public CheckinConfirmMsg checkinOneBike(CheckinReqMsg checkinMsg) {
+	Station station = getStation(checkinMsg.getStationId());
+	if (station == null || station.getAvailBikes() >= station.getTotalDocks()) 
+	    return ComplMsgMapper.toNotOkCheckinMsg();
+	
+	InBike inBike = bikeSvc.checkinBike(checkinMsg.getBikeId(), checkinMsg.getStationId());
+	if (inBike == null) return ComplMsgMapper.toNotOkCheckinMsg();
+	
+	increaseAvailBikesByOne(inBike.getToStationId());
+	return ComplMsgMapper.toOkCheckinMsg(inBike);
     }
 }
