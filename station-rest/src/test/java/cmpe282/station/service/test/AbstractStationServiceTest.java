@@ -2,9 +2,9 @@ package cmpe282.station.service.test;
 
 import org.junit.Before;
 
-import cmpe282.message.ConfirmMsg;
-import cmpe282.message.ReservMsg;
 import cmpe282.station.entity.StationBike;
+import cmpe282.message.mq.ConfirmMsg;
+import cmpe282.message.mq.ReservMsg;
 import cmpe282.station.entity.RsvdBike;
 import cmpe282.station.entity.Station;
 

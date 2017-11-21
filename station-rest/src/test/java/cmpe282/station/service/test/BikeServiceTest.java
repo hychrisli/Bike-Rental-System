@@ -13,12 +13,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.cassandra.repository.MapId;
 
 import cmpe282.station.entity.RsvdBike;
-import cmpe282.station.entity.StationBike;
-import cmpe282.station.mapper.MapIdMapper;
 import cmpe282.station.repository.InBikeRepository;
 import cmpe282.station.repository.OutBikeRepository;
 import cmpe282.station.repository.RsvdBikeRepository;

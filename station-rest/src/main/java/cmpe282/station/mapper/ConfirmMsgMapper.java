@@ -1,7 +1,7 @@
 package cmpe282.station.mapper;
 
-import cmpe282.message.ConfirmMsg;
-import cmpe282.message.ReservMsg;
+import cmpe282.message.mq.ConfirmMsg;
+import cmpe282.message.mq.ReservMsg;
 import cmpe282.station.entity.RsvdBike;
 
 public class ConfirmMsgMapper {

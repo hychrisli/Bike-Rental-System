@@ -1,4 +1,4 @@
-package cmpe282.message;
+package cmpe282.message.mq;
 
 public class ReservMsg {
     

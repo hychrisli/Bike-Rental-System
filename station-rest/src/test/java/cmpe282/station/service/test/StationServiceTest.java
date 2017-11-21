@@ -19,7 +19,7 @@ import org.springframework.data.cassandra.repository.MapId;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import cmpe282.message.ConfirmMsg;
+import cmpe282.message.mq.ConfirmMsg;
 import cmpe282.station.mapper.MapIdMapper;
 import cmpe282.station.repository.StationRepository;
 import cmpe282.station.service.BikeService;

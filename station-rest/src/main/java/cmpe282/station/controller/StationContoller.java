@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.api.core.ApiFuture;
 
-import cmpe282.message.ConfirmMsg;
-import cmpe282.message.ReservMsg;
+import cmpe282.message.direct.CheckoutConfirmMsg;
+import cmpe282.message.direct.CheckoutReqMsg;
+import cmpe282.message.mq.ConfirmMsg;
+import cmpe282.message.mq.ReservMsg;
 import cmpe282.station.entity.Station;
 import cmpe282.station.service.PublisherService;
 import cmpe282.station.service.StationService;
@@ -50,9 +52,15 @@ public class StationContoller extends AbstractController {
     }
 
     @ApiOperation(value = "Reserve a bike")
-    @PostMapping(STATION)
+    @PostMapping(STATION + "/reserve")
     public ResponseEntity<ConfirmMsg> reserveBike(@RequestBody ReservMsg reservMsg ) {
 	return success(stationSvc.reserveOneBike(reservMsg));
+    }
+    
+    @ApiOperation(value = "Check out a bike")
+    @PostMapping(STATION + "/checkout")
+    public ResponseEntity<CheckoutConfirmMsg> checkoutBike(@RequestBody CheckoutReqMsg checkoutMsg ) {
+	return success(stationSvc.checkoutOneBike(checkoutMsg));
     }
 
     @ApiOperation(value = "Publish a message")

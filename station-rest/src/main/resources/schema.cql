@@ -5,7 +5,7 @@ USE brs;
 CREATE TABLE Station ( station_id TEXT, name TEXT, total_docks INT, avail_bikes INT, PRIMARY KEY (station_id));
 CREATE TABLE StationBike (bike_id TEXT, station_id TEXT, PRIMARY KEY (bike_id));
 CREATE TABLE RsvdBike (bike_id TEXT, station_id TEXT, user_id TEXT, txn_id TEXT, PRIMARY KEY (user_id));
-CREATE TABLE OutBike (bike_id TEXT, user_id TEXT, txt_id TEXT, from_station_id TEXT, checkout_time TIMESTAMP, PRIMARY KEY(bike_id));
+CREATE TABLE OutBike (bike_id TEXT, user_id TEXT, txn_id TEXT, from_station_id TEXT, checkout_time TIMESTAMP, PRIMARY KEY(bike_id));
 CREATE TABLE InBike (txn_id TEXT, bike_id TEXT, user_id TEXT, from_station_id TEXT, to_station_id INT, checkout_time TIMESTAMP, checkin_time TIMESTAMP, grand_total float, PRIMARY KEY (txn_id));
 
 

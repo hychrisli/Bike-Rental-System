@@ -59,8 +59,7 @@ public class BikeServiceImpl implements BikeService {
     @Override
     public RsvdBike rsvBike(String stationId, String txnId, String userId) {
 	StationBike stationBike = stationBikeRepo.findOneBike(stationId);
-	if (stationBike == null )
-	    return null;
+	if (stationBike == null ) return null;
 	
 	RsvdBike rsvdBike = BikeMapper.toRsvdBike(stationBike, userId, txnId);
 	rsvdBikeRepo.save(rsvdBike);
@@ -71,8 +70,7 @@ public class BikeServiceImpl implements BikeService {
     @Override
     public StationBike cancelRsvdBike(String userId) {
 	RsvdBike rsvdBike = getRsvdBike(userId);
-	if (rsvdBike == null)
-	    return null;
+	if (rsvdBike == null) return null;
 	
 	StationBike stationBike = BikeMapper.toStationBike(rsvdBike);
 	stationBikeRepo.save(stationBike);
@@ -82,8 +80,14 @@ public class BikeServiceImpl implements BikeService {
     
     @Override
     public OutBike checkoutBike(String userId) {
-	// TODO Auto-generated method stub
-	return null;
+	RsvdBike rsvdBike = getRsvdBike(userId);
+	
+	if (rsvdBike == null) return null;
+	
+	OutBike outBike = BikeMapper.toOutBike(rsvdBike);
+	outBikeRepo.save(outBike);
+	rsvdBikeRepo.delete(rsvdBike);
+	return outBike;
     }
 
     @Override
