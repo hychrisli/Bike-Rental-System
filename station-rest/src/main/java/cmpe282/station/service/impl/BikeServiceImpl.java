@@ -22,6 +22,7 @@ import cmpe282.station.service.BikeService;
 @Transactional
 public class BikeServiceImpl implements BikeService {
 
+    @SuppressWarnings("unused")
     private static Logger LOGGER = Logger.getLogger(BikeServiceImpl.class.getName());
     
     @Autowired

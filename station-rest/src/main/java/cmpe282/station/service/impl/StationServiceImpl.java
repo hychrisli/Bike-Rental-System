@@ -28,7 +28,7 @@ import cmpe282.station.service.StationService;
 @Transactional
 public class StationServiceImpl implements StationService {
 
-    // private static Logger LOGGER = Logger.getLogger(StationServiceImpl.class.getName());
+    private static Logger LOGGER = Logger.getLogger(StationServiceImpl.class.getName());
     
     @Autowired
     private StationRepository stationRepo;
