@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: brs
+  labels:
+    app: web
+spec:
+  containers:
+    - image: launcher.gcr.io/google/cassandra3
+      name: cassandra
+      volumeMounts:
+        - name: cassandra-data
+          mountPath: /var/lib/cassandra
+      ports:
+        - containerPort: 9042 
+  volumes:
+    - name: cassandra-data
+      persistentVolumeClaim:
+        claimName: cassandra-data
+    
