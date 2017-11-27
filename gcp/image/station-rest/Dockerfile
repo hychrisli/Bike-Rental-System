@@ -5,7 +5,8 @@ FROM openjdk:8
 RUN mkdir /station-rest
 
 # Copy host build directory to /myapp directory in the image
-COPY . /station-rest
+COPY . /station-rest/
+COPY $GOOGLE_APPLICATION_CREDENTIALS /station-rest/
 
 # Set /myapp as the working directory 
 WORKDIR /station-rest
