@@ -1,14 +1,13 @@
 package cmpe282.station.service.impl;
 
 import static cmpe282.message.Topics.TOPIC_COMPLETION;
+import static cmpe282.message.Topics.TOPIC_CONFIRMATION;
 
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.google.api.core.ApiFuture;
 
 import cmpe282.message.direct.CheckinConfirmMsg;
 import cmpe282.message.direct.CheckinReqMsg;
@@ -21,7 +20,6 @@ import cmpe282.station.entity.InBike;
 import cmpe282.station.entity.OutBike;
 import cmpe282.station.entity.RsvdBike;
 import cmpe282.station.entity.Station;
-import cmpe282.station.error.AppException;
 import cmpe282.station.mapper.CheckoutMsgMapper;
 import cmpe282.station.mapper.ComplMsgMapper;
 import cmpe282.station.mapper.ConfirmMsgMapper;
@@ -77,18 +75,25 @@ public class StationServiceImpl implements StationService {
     @Override
     public ConfirmMsg reserveOneBike(ReservMsg reservMsg) {
 
+	ConfirmMsg confirmMsg = ConfirmMsgMapper.toNotOkMsg(reservMsg);
+	
 	Station station = getStation(reservMsg.getStationId());
 
-	if (station == null || station.getAvailBikes() < 1)
-	    return ConfirmMsgMapper.toNotOkMsg(reservMsg);
+	if (station != null && station.getAvailBikes() > 0) {
+	    RsvdBike rsvdBike = bikeSvc.rsvBike(reservMsg.getStationId(), reservMsg.getTransactionId(),
+		    reservMsg.getUserId());
 
-	RsvdBike rsvdBike = bikeSvc.rsvBike(reservMsg.getStationId(), reservMsg.getTransactionId(),
-		reservMsg.getUserId());
+	    if (rsvdBike != null && decreaseAvailBikesByOne(rsvdBike.getStationId()))
+		confirmMsg = ConfirmMsgMapper.toOkMsg(rsvdBike);
+	}
 
-	if (rsvdBike != null && decreaseAvailBikesByOne(rsvdBike.getStationId()))
-	    return ConfirmMsgMapper.toOkMsg(rsvdBike);
+	try {
+	    pubSvc.publishMessage(TOPIC_CONFIRMATION.name(), confirmMsg);
+	} catch (Exception e) {
+	    LOGGER.warning(e.getMessage());
+	}
 
-	return ConfirmMsgMapper.toNotOkMsg(reservMsg);
+	return confirmMsg;
     }
 
     @Override

@@ -31,10 +31,7 @@ public class ComplMsgMapper {
 	ComplMsg complMsg = new ComplMsg();
 	complMsg.setTransactionId(inBike.getTxnId());
 	complMsg.setUserId(inBike.getUserId());
-	complMsg.setGrandTotal(
-		FareCalculator.calcFare(
-			inBike.getCheckoutTime(), 
-			inBike.getCheckinTime()));
+	complMsg.setGrandTotal(inBike.getGrandTotal());
 	
 	return complMsg;
     }

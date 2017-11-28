@@ -1,7 +1,6 @@
 package cmpe282.station.controller;
 
 import static cmpe282.message.Topics.TOPIC_RESERVATION;
-import static cmpe282.message.Topics.TOPIC_COMPLETION;
 import static cmpe282.station.config.UrlConstants.STATION;
 
 import java.util.logging.Logger;
@@ -15,17 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.api.core.ApiFuture;
 
 import cmpe282.message.direct.CheckinConfirmMsg;
 import cmpe282.message.direct.CheckinReqMsg;
 import cmpe282.message.direct.CheckoutConfirmMsg;
 import cmpe282.message.direct.CheckoutReqMsg;
-import cmpe282.message.mq.ComplMsg;
 import cmpe282.message.mq.ConfirmMsg;
 import cmpe282.message.mq.ReservMsg;
 import cmpe282.station.entity.Station;
-import cmpe282.station.mapper.ComplMsgMapper;
 import cmpe282.station.service.PublisherService;
 import cmpe282.station.service.StationService;
 import io.swagger.annotations.Api;
