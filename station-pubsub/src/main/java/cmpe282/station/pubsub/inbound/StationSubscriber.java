@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 import cmpe282.station.pubsub.CmpeSubscriber;
 import cmpe282.station.pubsub.msghandler.ReservMsgHandler;
-import cmpe282.station.pubsub.msghandler.StationMsgHandler;
 
 @Component
 public class StationSubscriber extends CmpeSubscriber {
