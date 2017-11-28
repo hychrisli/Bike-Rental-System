@@ -1,7 +1,5 @@
 package cmpe282.station.entity;
 
-
-import java.sql.Timestamp;
 import java.util.Date;
 
 import org.springframework.cassandra.core.PrimaryKeyType;

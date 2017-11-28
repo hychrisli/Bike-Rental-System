@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.api.core.ApiFuture;
 
 import cmpe282.message.direct.CheckinConfirmMsg;
 import cmpe282.message.direct.CheckinReqMsg;
@@ -67,14 +66,14 @@ public class StationContoller extends AbstractController {
     
     @ApiOperation(value = "Check in a bike")
     @PostMapping(STATION + "/checkin")
-    public ResponseEntity<CheckinConfirmMsg> checkinBike(@RequestBody CheckinReqMsg checkinMsg ) {
-	return success(stationSvc.checkinOneBike(checkinMsg));
+    public ResponseEntity<CheckinConfirmMsg> checkinBike(@RequestBody CheckinReqMsg checkinMsg ) throws Exception {
+	CheckinConfirmMsg checkinConfirmMsg = stationSvc.checkinOneBike(checkinMsg);
+	return success(checkinConfirmMsg);
     }
 
     @ApiOperation(value = "Publish a message")
     @PostMapping(STATION + "/publish")
     public ResponseEntity<String> publishMsg(@RequestBody String msg) throws Exception {
-	ApiFuture<String> messageId = pubSvc.publishMessage(TOPIC_RESERVATION.name(), msg);
-	return success(messageId.get());
+	return success( pubSvc.publishMessage(TOPIC_RESERVATION.name(), msg));
     }
 }

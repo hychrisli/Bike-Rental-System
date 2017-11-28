@@ -8,6 +8,8 @@ public class CheckinConfirmMsg {
     
     String user_id;
     
+    String message_id;
+
     Float grand_total;
 
     public Boolean isCheckedIn() {
@@ -40,5 +42,13 @@ public class CheckinConfirmMsg {
 
     public void setTransactionId(String txnId) {
         this.transaction_id = txnId;
+    }
+    
+    public String getMessageId() {
+        return message_id;
+    }
+
+    public void setMessageId(String messageId) {
+        this.message_id = messageId;
     }
 }

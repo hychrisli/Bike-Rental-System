@@ -1,6 +1,6 @@
 package cmpe282.station.pubsub.inbound;
 
-import static cmpe282.message.Subscriptions.mySub;
+import static cmpe282.message.Subscriptions.SUB_RESERVATION;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.gcp.pubsub.core.PubSubOperations;
@@ -13,8 +13,7 @@ import org.springframework.messaging.MessageHandler;
 import org.springframework.stereotype.Component;
 
 import cmpe282.station.pubsub.CmpeSubscriber;
-import cmpe282.station.pubsub.msghandler.Station2MsgHandler;
-import cmpe282.station.pubsub.msghandler.StationMsgHandler;
+import cmpe282.station.pubsub.msghandler.ReservMsgHandler;
 
 @Component
 public class StationSubscriber extends CmpeSubscriber {
@@ -27,14 +26,14 @@ public class StationSubscriber extends CmpeSubscriber {
     @Bean
     @ServiceActivator(inputChannel = "stationInChannel")
     public MessageHandler stationMsgReceiver() {
-	return new Station2MsgHandler();
+	return new ReservMsgHandler();
     }
 
     @Bean
     public PubSubInboundChannelAdapter stationChannelAdapter(
 	    @Qualifier("stationInChannel") MessageChannel inputChannel,
 	    PubSubOperations pubSubTemplate) {
-	return buildChannelAdapter(inputChannel, pubSubTemplate, mySub.name());
+	return buildChannelAdapter(inputChannel, pubSubTemplate, SUB_RESERVATION.name());
     }
 
 }
