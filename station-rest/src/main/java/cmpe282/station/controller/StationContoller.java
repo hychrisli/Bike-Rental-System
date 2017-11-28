@@ -1,6 +1,7 @@
 package cmpe282.station.controller;
 
 import static cmpe282.message.Topics.TOPIC_RESERVATION;
+import static cmpe282.message.Topics.TOPIC_COMPLETION;
 import static cmpe282.station.config.UrlConstants.STATION;
 
 import java.util.logging.Logger;
@@ -20,9 +21,11 @@ import cmpe282.message.direct.CheckinConfirmMsg;
 import cmpe282.message.direct.CheckinReqMsg;
 import cmpe282.message.direct.CheckoutConfirmMsg;
 import cmpe282.message.direct.CheckoutReqMsg;
+import cmpe282.message.mq.ComplMsg;
 import cmpe282.message.mq.ConfirmMsg;
 import cmpe282.message.mq.ReservMsg;
 import cmpe282.station.entity.Station;
+import cmpe282.station.mapper.ComplMsgMapper;
 import cmpe282.station.service.PublisherService;
 import cmpe282.station.service.StationService;
 import io.swagger.annotations.Api;
@@ -67,14 +70,14 @@ public class StationContoller extends AbstractController {
     
     @ApiOperation(value = "Check in a bike")
     @PostMapping(STATION + "/checkin")
-    public ResponseEntity<CheckinConfirmMsg> checkinBike(@RequestBody CheckinReqMsg checkinMsg ) {
-	return success(stationSvc.checkinOneBike(checkinMsg));
+    public ResponseEntity<CheckinConfirmMsg> checkinBike(@RequestBody CheckinReqMsg checkinMsg ) throws Exception {
+	CheckinConfirmMsg checkinConfirmMsg = stationSvc.checkinOneBike(checkinMsg);
+	return success(checkinConfirmMsg);
     }
 
     @ApiOperation(value = "Publish a message")
     @PostMapping(STATION + "/publish")
     public ResponseEntity<String> publishMsg(@RequestBody String msg) throws Exception {
-	ApiFuture<String> messageId = pubSvc.publishMessage(TOPIC_RESERVATION.name(), msg);
-	return success(messageId.get());
+	return success( pubSvc.publishMessage(TOPIC_RESERVATION.name(), msg));
     }
 }

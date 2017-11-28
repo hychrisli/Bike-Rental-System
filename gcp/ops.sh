@@ -1,5 +1,5 @@
 # Create cassandra pod
-kubectl create -f brs-cassandra-pod.yaml
+kubectl create -f brs-cassandra.yaml
 kubectl expose pod  --type=ClusterIP --name=svc-db
 
 # Create station-rest pod

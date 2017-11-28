@@ -1,5 +1,6 @@
 package cmpe282.station.service.test;
 
+import static cmpe282.message.Topics.TOPIC_COMPLETION;
 import static org.mockito.Matchers.refEq;
 
 import org.junit.Assert;
@@ -11,12 +12,17 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.repository.MapId;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.api.core.ApiFuture;
 
 import cmpe282.message.direct.CheckinConfirmMsg;
 import cmpe282.message.direct.CheckinReqMsg;
 import cmpe282.message.direct.CheckoutConfirmMsg;
 import cmpe282.message.direct.CheckoutReqMsg;
+import cmpe282.message.mq.ComplMsg;
 import cmpe282.message.mq.ConfirmMsg;
 import cmpe282.message.mq.ReservMsg;
 import cmpe282.station.mapper.CheckoutMsgMapper;
@@ -25,20 +31,22 @@ import cmpe282.station.mapper.ConfirmMsgMapper;
 import cmpe282.station.mapper.MapIdMapper;
 import cmpe282.station.repository.StationRepository;
 import cmpe282.station.service.BikeService;
+import cmpe282.station.service.PublisherService;
 import cmpe282.station.service.StationService;
 import cmpe282.station.service.impl.StationServiceImpl;
 
 
 @RunWith(MockitoJUnitRunner.class)
 public class StationServiceTest extends AbstractStationServiceTest {
-
-
     
     @Mock
     private StationRepository stationRepo;
     
     @Mock
     private BikeService bikeSvc;
+    
+    @Mock
+    private PublisherService pubSvc;
     
     @InjectMocks
     private StationService stationSvc = new StationServiceImpl();
@@ -49,7 +57,7 @@ public class StationServiceTest extends AbstractStationServiceTest {
     private CheckoutConfirmMsg checkoutConfirmOkMsg, checkoutConfirmFailMsg;
     private CheckinReqMsg checkinReqOkmsg, checkinReqFailMsg;
     private CheckinConfirmMsg checkinConfirmOkMsg, checkinConfirmFailMsg;
-    
+    private ComplMsg complMsg;
     
     
     @Before
@@ -97,7 +105,9 @@ public class StationServiceTest extends AbstractStationServiceTest {
 	checkinReqFailMsg.setBikeId(bike2.getBikeId());
 	checkinReqFailMsg.setStationId(station1.getStationId());
 	
-	checkinConfirmOkMsg = ComplMsgMapper.toOkCheckinMsg(bike1In);
+	complMsg = ComplMsgMapper.toComplMsg(bike1In);
+	complMsg.setGrandTotal(grandTotal);
+	checkinConfirmOkMsg = ComplMsgMapper.toOkCheckinMsg(complMsg, "msg1");
 	checkinConfirmFailMsg = ComplMsgMapper.toNotOkCheckinMsg();
     }
     
@@ -145,7 +155,8 @@ public class StationServiceTest extends AbstractStationServiceTest {
     }
     
     @Test
-    public void testCheckinOnBike(){
+    public void testCheckinOnBike() throws Exception{
+	
 	Mockito
 	.when(bikeSvc.checkinBike(bike1In.getBikeId(), bike1In.getToStationId()))
 	.thenReturn(bike1In);
@@ -153,7 +164,13 @@ public class StationServiceTest extends AbstractStationServiceTest {
 	Mockito.when(bikeSvc.checkinBike(bike2.getBikeId(), station1.getStationId()))
 	.thenReturn(null);
 	
-	Assert.assertThat(stationSvc.checkinOneBike(checkinReqOkmsg), 
+	Mockito.when(pubSvc.publishMessage(TOPIC_COMPLETION.name(), complMsg))
+	.thenReturn("msg1");
+	
+	CheckinConfirmMsg cic1Msg = stationSvc.checkinOneBike(checkinReqOkmsg);
+	cic1Msg.setMessageId("msg1");
+	cic1Msg.setGrandTotal(grandTotal);
+	Assert.assertThat(cic1Msg, 
 		new ReflectionEquals(checkinConfirmOkMsg));
 	
 	Assert.assertThat(stationSvc.checkinOneBike(checkinReqFailMsg), 

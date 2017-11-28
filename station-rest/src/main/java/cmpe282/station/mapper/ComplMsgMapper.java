@@ -6,16 +6,14 @@ import cmpe282.station.entity.InBike;
 
 public class ComplMsgMapper {
 
-    public static CheckinConfirmMsg toOkCheckinMsg(InBike inBike){
+    public static CheckinConfirmMsg toOkCheckinMsg(ComplMsg cmplMsg, String messageId){
 	
 	CheckinConfirmMsg checkinMsg = new CheckinConfirmMsg();
 	checkinMsg.setCheckedIn(true);
-	checkinMsg.setUserId(inBike.getUserId());
-	checkinMsg.setTransactionId(inBike.getTxnId());
-	checkinMsg.setGrandTotal(
-		FareCalculator.calcFare(
-			inBike.getCheckoutTime(), 
-			inBike.getCheckinTime()));
+	checkinMsg.setUserId(cmplMsg.getUserId());
+	checkinMsg.setTransactionId(cmplMsg.getTransactionId());
+	checkinMsg.setMessageId(messageId);
+	checkinMsg.setGrandTotal(cmplMsg.getGrandTotal());
 	
 	return checkinMsg;
     }
@@ -28,12 +26,15 @@ public class ComplMsgMapper {
 	return checkinMsg;
     }
     
-    public static ComplMsg toComplMsg (CheckinConfirmMsg checkinMsg) {
+    public static ComplMsg toComplMsg (InBike inBike) {
 	
 	ComplMsg complMsg = new ComplMsg();
-	complMsg.setTransactionId(checkinMsg.getTransactionId());
-	complMsg.setUserId(checkinMsg.getUserId());
-	complMsg.setGrandTotal(checkinMsg.getGrandTotal());
+	complMsg.setTransactionId(inBike.getTxnId());
+	complMsg.setUserId(inBike.getUserId());
+	complMsg.setGrandTotal(
+		FareCalculator.calcFare(
+			inBike.getCheckoutTime(), 
+			inBike.getCheckinTime()));
 	
 	return complMsg;
     }
