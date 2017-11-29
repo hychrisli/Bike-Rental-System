@@ -11,7 +11,7 @@ public class ComplMsgMapper {
 	CheckinConfirmMsg checkinMsg = new CheckinConfirmMsg();
 	checkinMsg.setCheckedIn(true);
 	checkinMsg.setUserId(cmplMsg.getUserId());
-	checkinMsg.setTransactionId(cmplMsg.getTransactionId());
+	checkinMsg.setTxnId(cmplMsg.getTxnId());
 	checkinMsg.setMessageId(messageId);
 	checkinMsg.setGrandTotal(cmplMsg.getGrandTotal());
 	
@@ -29,7 +29,7 @@ public class ComplMsgMapper {
     public static ComplMsg toComplMsg (InBike inBike) {
 	
 	ComplMsg complMsg = new ComplMsg();
-	complMsg.setTransactionId(inBike.getTxnId());
+	complMsg.setTxnId(inBike.getTxnId());
 	complMsg.setUserId(inBike.getUserId());
 	complMsg.setGrandTotal(inBike.getGrandTotal());
 	

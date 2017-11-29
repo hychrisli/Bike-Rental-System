@@ -1,27 +1,31 @@
 package cmpe282.message.direct;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CheckoutConfirmMsg {
 
-    boolean is_success;
+    @JsonProperty("is_success")
+    boolean isSuccess;
     
-    String bike_id;
+    @JsonProperty("bike_id")
+    String bikeId;
 
+    @JsonProperty("is_success")
     public boolean isSuccess() {
-        return is_success;
+        return isSuccess;
     }
 
     public String getBikeId() {
-        return bike_id;
+        return bikeId;
     }
 
     public void setSuccess(boolean isSuccess) {
-        this.is_success = isSuccess;
+        this.isSuccess = isSuccess;
     }
 
     public void setBikeId(String bikeId) {
-        this.bike_id = bikeId;
-    } 
-    
+        this.bikeId = bikeId;
+    }
     
     
 }

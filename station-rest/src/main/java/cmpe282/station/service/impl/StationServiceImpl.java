@@ -80,7 +80,7 @@ public class StationServiceImpl implements StationService {
 	Station station = getStation(reservMsg.getStationId());
 
 	if (station != null && station.getAvailBikes() > 0) {
-	    RsvdBike rsvdBike = bikeSvc.rsvBike(reservMsg.getStationId(), reservMsg.getTransactionId(),
+	    RsvdBike rsvdBike = bikeSvc.rsvBike(reservMsg.getStationId(), reservMsg.getTxnId(),
 		    reservMsg.getUserId());
 
 	    if (rsvdBike != null && decreaseAvailBikesByOne(rsvdBike.getStationId()))

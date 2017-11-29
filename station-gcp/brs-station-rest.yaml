@@ -12,7 +12,7 @@ spec:
         - containerPort: 8080
       env:
         - name: CASSANDRA_HOST
-          value: indb2
+          value: svc-db
         - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: bike-rental-system-d3bc3066fbe8.json
+          value: /station-rest/bike-rental-system-d3bc3066fbe8.json
     

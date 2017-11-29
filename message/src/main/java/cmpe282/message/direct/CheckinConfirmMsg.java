@@ -1,54 +1,65 @@
 package cmpe282.message.direct;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CheckinConfirmMsg {
 
-    Boolean checked_in;
+    @JsonProperty("checked_in")
+    boolean isCheckedIn;
     
-    String transaction_id;
+    @JsonProperty("transaction_in")
+    String txnId;
     
-    String user_id;
+    @JsonProperty("user_id")
+    String userId;
     
-    String message_id;
+    @JsonProperty("message_id")
+    String messageId;
 
-    Float grand_total;
+    @JsonProperty("grand_total")
+    Float grandTotal;
 
-    public Boolean isCheckedIn() {
-        return checked_in;
-    }
 
     public String getUserId() {
-        return user_id;
+        return userId;
+    }
+
+    public String getMessageId() {
+        return messageId;
     }
 
     public Float getGrandTotal() {
-        return grand_total;
-    }
-
-    public void setCheckedIn(Boolean checkedIn) {
-        this.checked_in = checkedIn;
+        return grandTotal;
     }
 
     public void setUserId(String userId) {
-        this.user_id = userId;
-    }
-
-    public void setGrandTotal(Float grandTotal) {
-        this.grand_total = grandTotal;
-    }
-
-    public String getTransactionId() {
-        return transaction_id;
-    }
-
-    public void setTransactionId(String txnId) {
-        this.transaction_id = txnId;
-    }
-    
-    public String getMessageId() {
-        return message_id;
+        this.userId = userId;
     }
 
     public void setMessageId(String messageId) {
-        this.message_id = messageId;
+        this.messageId = messageId;
     }
+
+    public void setGrandTotal(Float grandTotal) {
+        this.grandTotal = grandTotal;
+    }
+
+    @JsonProperty("checked_in")
+    public boolean isCheckedIn() {
+        return isCheckedIn;
+    }
+
+    public void setCheckedIn(boolean isCheckedIn) {
+        this.isCheckedIn = isCheckedIn;
+    }
+
+    public String getTxnId() {
+        return txnId;
+    }
+
+    public void setTxnId(String txnId) {
+        this.txnId = txnId;
+    }
+    
+    
 }

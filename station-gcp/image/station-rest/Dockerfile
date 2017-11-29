@@ -1,14 +1,13 @@
 # Set the base image to open jdk 8
 FROM openjdk:8
 
-# Run mkdir command to create directory /myapp in this image
+# Run mkdir command to create directory /station-rest in this image
 RUN mkdir /station-rest
 
-# Copy host build directory to /myapp directory in the image
+# Copy host build directory to /station-rest directory in the image
 COPY . /station-rest/
-COPY $GOOGLE_APPLICATION_CREDENTIALS /station-rest/
 
-# Set /myapp as the working directory 
+# Set /station-rest as the working directory 
 WORKDIR /station-rest
 
 # Docker container listens to 8080

@@ -1,28 +1,40 @@
 package cmpe282.message.mq;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ReservMsg {
     
-    private String transaction_id;
-    private String user_id;
-    private String station_id;
+    @JsonProperty("transaction_id")
+    private String txnId;
     
-    public String getTransactionId() {
-        return transaction_id;
+    @JsonProperty("user_id")
+    private String userId;
+    
+    @JsonProperty("station_id")
+    private String stationId;
+
+    public String getTxnId() {
+        return txnId;
     }
-    public void setTransactionId(String transaction_id) {
-        this.transaction_id = transaction_id;
-    }
+
     public String getUserId() {
-        return user_id;
+        return userId;
     }
-    public void setUserId(String user_id) {
-        this.user_id = user_id;
-    }
+
     public String getStationId() {
-        return station_id;
+        return stationId;
     }
-    public void setStationId(String station_id) {
-        this.station_id = station_id;
+
+    public void setTxnId(String txnId) {
+        this.txnId = txnId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setStationId(String stationId) {
+        this.stationId = stationId;
     }
     
 }
