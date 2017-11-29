@@ -1,26 +1,31 @@
 package cmpe282.message.direct;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CheckinReqMsg {
 
-    String bike_id;
+    @JsonProperty("bike_id")
+    String bikeId;
     
-    String station_id;
+    @JsonProperty("station_id")
+    String stationId;
 
     public String getBikeId() {
-        return bike_id;
+        return bikeId;
     }
 
     public String getStationId() {
-        return station_id;
+        return stationId;
     }
 
     public void setBikeId(String bikeId) {
-        this.bike_id = bikeId;
+        this.bikeId = bikeId;
     }
 
     public void setStationId(String stationId) {
-        this.station_id = stationId;
+        this.stationId = stationId;
     }
+    
     
     
 }

@@ -1,56 +1,63 @@
 package cmpe282.message.mq;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ConfirmMsg {
 
-    private String transaction_id;
+    @JsonProperty("transaction_id")
+    private String txnId;
     
-    private String user_id;
+    @JsonProperty("user_id")
+    private String userId;
     
-    private boolean is_reserved;
+    @JsonProperty("is_reserved")
+    private boolean isReserved;
     
-    private String bike_id;
+    @JsonProperty("bike_id")
+    private String bikeId;
     
-    private String station_id;
+    @JsonProperty("station_id")
+    private String stationId;
 
-    public String getTransactionId() {
-        return transaction_id;
-    }
-
-    public void setTransactionId(String transaction_id) {
-        this.transaction_id = transaction_id;
+    public String getTxnId() {
+        return txnId;
     }
 
     public String getUserId() {
-        return user_id;
+        return userId;
     }
 
-    public void setUserId(String user_id) {
-        this.user_id = user_id;
-    }
-
+    @JsonProperty("is_reserved")
     public boolean isReserved() {
-        return is_reserved;
-    }
-
-    public void setReserved(boolean is_reserved) {
-        this.is_reserved = is_reserved;
+        return isReserved;
     }
 
     public String getBikeId() {
-        return bike_id;
-    }
-
-    public void setBikeId(String bike_id) {
-        this.bike_id = bike_id;
+        return bikeId;
     }
 
     public String getStationId() {
-        return station_id;
+        return stationId;
     }
 
-    public void setStationId(String station_id) {
-        this.station_id = station_id;
+    public void setTxnId(String txnId) {
+        this.txnId = txnId;
     }
-    
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setReserved(boolean isReserved) {
+        this.isReserved = isReserved;
+    }
+
+    public void setBikeId(String bikeId) {
+        this.bikeId = bikeId;
+    }
+
+    public void setStationId(String stationId) {
+        this.stationId = stationId;
+    }
     
 }

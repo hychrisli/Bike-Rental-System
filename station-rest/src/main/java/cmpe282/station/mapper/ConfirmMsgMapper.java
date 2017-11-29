@@ -13,7 +13,7 @@ public class ConfirmMsgMapper {
 	msg.setBikeId(bike.getBikeId());
 	msg.setReserved(true);
 	msg.setUserId(bike.getUserId());
-	msg.setTransactionId(bike.getTxnId());
+	msg.setTxnId(bike.getTxnId());
 	
 	return msg;
     }
@@ -22,7 +22,7 @@ public class ConfirmMsgMapper {
 	
 	ConfirmMsg msg = new ConfirmMsg();
 	msg.setStationId(reservMsg.getStationId());
-	msg.setTransactionId(reservMsg.getTransactionId());
+	msg.setTxnId(reservMsg.getTxnId());
 	msg.setUserId(reservMsg.getUserId());
 	msg.setReserved(false);
 	msg.setBikeId("");

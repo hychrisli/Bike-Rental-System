@@ -1,36 +1,41 @@
 package cmpe282.message.mq;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ComplMsg {
 
-    private String transaction_id;
+    @JsonProperty("transaction_id")
+    private String txnId;
     
-    private String user_id;
+    @JsonProperty("user_id")
+    private String userId;
     
-    private float grand_total;
-
-    public String getTransactionId() {
-        return transaction_id;
-    }
-
-    public void setTransactionId(String transaction_id) {
-        this.transaction_id = transaction_id;
-    }
+    @JsonProperty("grand_total")
+    private float grandTotal;
 
     public String getUserId() {
-        return user_id;
-    }
-
-    public void setUserId(String user_id) {
-        this.user_id = user_id;
+        return userId;
     }
 
     public float getGrandTotal() {
-        return grand_total;
+        return grandTotal;
     }
 
-    public void setGrandTotal(float grand_total) {
-        this.grand_total = grand_total;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
-    
+
+    public void setGrandTotal(float grandTotal) {
+        this.grandTotal = grandTotal;
+    }
+
+    public String getTxnId() {
+        return txnId;
+    }
+
+    public void setTxnId(String txnId) {
+        this.txnId = txnId;
+    }
+
     
 }

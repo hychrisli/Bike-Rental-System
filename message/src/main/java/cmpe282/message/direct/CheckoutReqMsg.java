@@ -1,15 +1,18 @@
 package cmpe282.message.direct;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CheckoutReqMsg {
 
-    String user_id;
+    @JsonProperty("user_id")
+    String userId;
 
     public String getUserId() {
-        return user_id;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        this.user_id = userId;
+        this.userId = userId;
     }
     
     

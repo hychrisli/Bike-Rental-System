@@ -75,12 +75,12 @@ public class StationServiceTest extends AbstractStationServiceTest {
 	
 	reservOkMsg = new ReservMsg();
 	reservOkMsg.setStationId(station1.getStationId());
-	reservOkMsg.setTransactionId(txnId1);
+	reservOkMsg.setTxnId(txnId1);
 	reservOkMsg.setUserId(userId1);
 	
 	reservFailMsgNoBike = new ReservMsg();
 	reservFailMsgNoBike.setStationId(station0.getStationId());
-	reservFailMsgNoBike.setTransactionId(txnId1);
+	reservFailMsgNoBike.setTxnId(txnId1);
 	reservFailMsgNoBike.setUserId(userId1);
 	
 	confirmOkMsg = ConfirmMsgMapper.toOkMsg(bike1Rsvd);
@@ -121,12 +121,12 @@ public class StationServiceTest extends AbstractStationServiceTest {
     public void testReserveOneBike(){
 	Mockito.when(bikeSvc.rsvBike(
 		confirmFailMsgNoBike.getStationId(), 
-		confirmFailMsgNoBike.getTransactionId(), 
+		confirmFailMsgNoBike.getTxnId(), 
 		confirmFailMsgNoBike.getUserId())).thenReturn(null);
 	
 	Mockito.when(bikeSvc.rsvBike(
 		confirmOkMsg.getStationId(), 
-		confirmOkMsg.getTransactionId(),
+		confirmOkMsg.getTxnId(),
 		confirmOkMsg.getUserId())).thenReturn(bike1Rsvd);
 	
 	Assert.assertThat(stationSvc.reserveOneBike(reservOkMsg), 

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: station-pubsub
+  labels:
+    app: web
+spec:
+  containers:
+    - image: gcr.io/bike-rental-system/station-pubsub
+      name: station-pubsub
+      env:
+        - name: STATION_REST_HOST
+          value: svc-rest
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /station-pubsub/bike-rental-system-d3bc3066fbe8.json
+    
