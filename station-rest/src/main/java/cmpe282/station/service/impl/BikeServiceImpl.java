@@ -85,8 +85,7 @@ public class BikeServiceImpl implements BikeService {
     @Override
     public OutBike checkoutBike(String userId, String stationId) {
 	RsvdBike rsvdBike = getRsvdBike(userId);
-	
-	if (rsvdBike == null || rsvdBike.getStationId() != stationId) 
+	if (rsvdBike == null || !rsvdBike.getStationId().equals(stationId)) 
 	    return null;
 	
 	OutBike outBike = BikeMapper.toOutBike(rsvdBike);
