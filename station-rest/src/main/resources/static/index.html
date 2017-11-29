@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.3/angular-resource.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/controller.js"></script>
+<body ng-app="station" ng-controller="station-ctrl">
+
+	<div class="container-fluid">
+		<h2>Station UI</h2>
+		<p>A UI at station Kiosk</p>
+		<div class="row">
+			<div class="col-sm-6" style="background-color: lavender;">
+				<form ng-submit="checkout()">
+					<input type="text" id="userId" ng-model="userId"> <input
+						type="submit">
+				</form>
+			</div>
+			<div class="col-sm-6" style="background-color: lavender;">
+				<form ng-submit="checkout()">
+					<input type="text" id="userId" ng-model="userId"> <input
+						type="submit">
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
