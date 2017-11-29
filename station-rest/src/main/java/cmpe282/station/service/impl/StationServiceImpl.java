@@ -3,6 +3,8 @@ package cmpe282.station.service.impl;
 import static cmpe282.message.Topics.TOPIC_COMPLETION;
 import static cmpe282.message.Topics.TOPIC_CONFIRMATION;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import cmpe282.message.direct.CheckinConfirmMsg;
 import cmpe282.message.direct.CheckinReqMsg;
 import cmpe282.message.direct.CheckoutConfirmMsg;
 import cmpe282.message.direct.CheckoutReqMsg;
+import cmpe282.message.direct.StationIdsMsg;
 import cmpe282.message.mq.ComplMsg;
 import cmpe282.message.mq.ConfirmMsg;
 import cmpe282.message.mq.ReservMsg;
@@ -98,7 +101,7 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public CheckoutConfirmMsg checkoutOneBike(CheckoutReqMsg checkoutReqMsg) {
-	OutBike outBike = bikeSvc.checkoutBike(checkoutReqMsg.getUserId());
+	OutBike outBike = bikeSvc.checkoutBike(checkoutReqMsg.getUserId(), checkoutReqMsg.getStationId());
 	if (outBike == null)
 	    return CheckoutMsgMapper.toNotOkMsg();
 	else
@@ -125,5 +128,16 @@ public class StationServiceImpl implements StationService {
 	}
 
 	return ComplMsgMapper.toNotOkCheckinMsg();
+    }
+
+    @Override
+    public StationIdsMsg getStationIds() {
+	Iterable<Station> stations = stationRepo.findAll();
+	List<String> stationIds = new ArrayList<String>();
+	stations.forEach(s -> stationIds.add(s.getStationId()));
+	StationIdsMsg stationIdsMsg = new StationIdsMsg();
+	stationIdsMsg.setStationIds(stationIds);
+	
+	return stationIdsMsg;
     }
 }

@@ -3,6 +3,7 @@ package cmpe282.station.controller;
 import static cmpe282.message.Topics.TOPIC_RESERVATION;
 import static cmpe282.station.config.UrlConstants.STATION;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import cmpe282.message.direct.CheckinConfirmMsg;
 import cmpe282.message.direct.CheckinReqMsg;
 import cmpe282.message.direct.CheckoutConfirmMsg;
 import cmpe282.message.direct.CheckoutReqMsg;
+import cmpe282.message.direct.StationIdsMsg;
 import cmpe282.message.mq.ConfirmMsg;
 import cmpe282.message.mq.ReservMsg;
 import cmpe282.station.entity.Station;
@@ -42,8 +44,16 @@ public class StationContoller extends AbstractController {
     @Autowired
     PublisherService pubSvc;
 
+    @ApiOperation(value = "Get Station Ids")
+    @GetMapping(STATION)
+    public ResponseEntity<StationIdsMsg> getStationIdList() {
+	StationIdsMsg stationIdsMsg = stationSvc.getStationIds();
+	return success(stationIdsMsg);
+    }
+    
+    
     @ApiOperation(value = "Get Station Detail by ID")
-    @GetMapping(STATION + "{station_id}")
+    @GetMapping(STATION + "/{station_id}")
     public ResponseEntity<Station> getStationDetail(@PathVariable String station_id) throws JsonProcessingException {
 	Station station = stationSvc.getStation(station_id);
 	if (station != null)

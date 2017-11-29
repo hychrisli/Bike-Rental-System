@@ -3,10 +3,12 @@ package cmpe282.station.error;
 import static cmpe282.station.config.JsonConstants.KEY_ERROR;
 import static cmpe282.station.config.JsonConstants.KEY_MESSAGE;
 import static cmpe282.station.error.ErrorCode.ERR_BAD_REQUEST;
+import static cmpe282.station.error.ErrorCode.ERR_INVALID_QUERY;
 import static cmpe282.station.error.ErrorCode.ERR_INTERNAL_SERVER_ERROR;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import org.slf4j.Logger;
+import org.springframework.cassandra.support.exception.CassandraInvalidQueryException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -31,6 +33,12 @@ public class AppExceptionHandler extends JsonResponseHandler{
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<JsonResponse> handleBadRequestException(HttpMessageNotReadableException e) {
 		LOGGER.error(ERR_BAD_REQUEST.name(),e);
+		return badRequest(e.getMessage());
+	}
+	
+	@ExceptionHandler(CassandraInvalidQueryException.class)
+	public ResponseEntity<JsonResponse> handleInvalidQueryException(CassandraInvalidQueryException e) {
+		LOGGER.error(ERR_INVALID_QUERY.name(),e);
 		return badRequest(e.getMessage());
 	}
 	

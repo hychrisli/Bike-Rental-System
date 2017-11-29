@@ -19,7 +19,7 @@ public interface BikeService {
     
     public StationBike cancelRsvdBike (String userId);
     
-    public OutBike checkoutBike(String userId);
+    public OutBike checkoutBike(String userId, String stationId);
     
     public InBike checkinBike(String bikeId, String stationId);
 }

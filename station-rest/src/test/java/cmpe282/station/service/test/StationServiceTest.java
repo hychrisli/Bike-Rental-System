@@ -89,9 +89,11 @@ public class StationServiceTest extends AbstractStationServiceTest {
 	
 	checkoutReqOkmsg = new CheckoutReqMsg();
 	checkoutReqOkmsg.setUserId(userId1);
+	checkoutReqOkmsg.setStationId(station1.getStationId());
 	
 	checkoutReqFailMsg = new CheckoutReqMsg();
 	checkoutReqFailMsg.setUserId(userId2);
+	checkoutReqFailMsg.setStationId(station1.getStationId());
 	
 	checkoutConfirmOkMsg = CheckoutMsgMapper.toOkMsg(bike1Out);
 	checkoutConfirmFailMsg = CheckoutMsgMapper.toNotOkMsg();
@@ -139,11 +141,11 @@ public class StationServiceTest extends AbstractStationServiceTest {
     public void testCheckoutOneBike() {
 	
 	Mockito
-	.when(bikeSvc.checkoutBike(userId1))
+	.when(bikeSvc.checkoutBike(userId1, station1.getStationId()))
 	.thenReturn(bike1Out);
 	
 	Mockito
-	.when(bikeSvc.checkoutBike(userId2))
+	.when(bikeSvc.checkoutBike(userId2, station1.getStationId()))
 	.thenReturn(null);
 	
 	Assert.assertThat(stationSvc.checkoutOneBike(checkoutReqOkmsg), 
