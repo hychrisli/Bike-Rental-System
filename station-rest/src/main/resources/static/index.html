@@ -21,11 +21,11 @@
 		<div class="row" ng-controller="station-ctrl">
 			<!-- Station selection -->
 			<div id="div-form" class="col-sm-4"
-				style="background-color: lavender;">
+				style="background-color: #ffeecc;">
 				<div id="div-note">
 					<p class="bg-warning">Select your station</p>
 				</div>
-				<select class="btn btn-primary dropdown-toggle" ng-model="selId"
+				<select class="btn btn-info dropdown-toggle" ng-model="selId"
 					ng-change="onClick()" ng-options="i for i in stationIds"></select>
 				<div id="div-note">
 					<p>{{stationName}}</p>
