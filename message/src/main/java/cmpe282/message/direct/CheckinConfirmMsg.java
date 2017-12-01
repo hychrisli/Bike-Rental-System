@@ -18,6 +18,9 @@ public class CheckinConfirmMsg {
 
     @JsonProperty("grand_total")
     Float grandTotal;
+    
+    @JsonProperty("status_details")
+    String statusDetails;
 
 
     public String getUserId() {
@@ -60,6 +63,15 @@ public class CheckinConfirmMsg {
     public void setTxnId(String txnId) {
         this.txnId = txnId;
     }
+
+    public String getStatusDetails() {
+        return statusDetails;
+    }
+
+    public void setStatusDetails(String statusDetails) {
+        this.statusDetails = statusDetails;
+    }
+    
     
     
 }

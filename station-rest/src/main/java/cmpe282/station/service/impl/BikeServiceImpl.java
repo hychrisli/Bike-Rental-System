@@ -54,6 +54,10 @@ public class BikeServiceImpl implements BikeService {
     public OutBike getOutBike(String bikeId) {
 	return outBikeRepo.findOne(MapIdMapper.toMapId("bikeId", bikeId));
     }
+    
+    private void deleteOutBike(String bikeId) {
+	outBikeRepo.delete(MapIdMapper.toMapId("bikeId", bikeId));
+    }
 
     @Override
     public InBike getInBike(String txnId) {
@@ -95,18 +99,20 @@ public class BikeServiceImpl implements BikeService {
     }
 
     @Override
-    public InBike checkinBike(String bikeId, String stationId) {
-	OutBike outBike = getOutBike(bikeId);
-	
-	if (outBike == null) return null;
-	
-	InBike inBike = BikeMapper.toInBike(outBike, stationId);
+    public void checkinBike(InBike inBike) {
+
 	StationBike stationBike = BikeMapper.toStationBike(inBike);
 	inBikeRepo.save(inBike);
 	stationBikeRepo.save(stationBike);
-	outBikeRepo.delete(outBike);
-	
-	return inBike;
+	deleteOutBike(inBike.getBikeId());
+
+    }
+
+    @Override
+    public InBike checkinPrepare(String bikeId, String stationId) {
+	OutBike outBike = getOutBike(bikeId);
+	if (outBike == null) return null;
+	return BikeMapper.toInBike(outBike, stationId);
     }
 
 }

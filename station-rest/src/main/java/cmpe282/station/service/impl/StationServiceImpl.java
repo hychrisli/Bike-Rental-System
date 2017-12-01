@@ -103,7 +103,7 @@ public class StationServiceImpl implements StationService {
     public CheckoutConfirmMsg checkoutOneBike(CheckoutReqMsg checkoutReqMsg) {
 	OutBike outBike = bikeSvc.checkoutBike(checkoutReqMsg.getUserId(), checkoutReqMsg.getStationId());
 	if (outBike == null)
-	    return CheckoutMsgMapper.toNotOkMsg();
+	    return CheckoutMsgMapper.toNotOkMsg("No bike for " + checkoutReqMsg.getUserId() + " to check out");
 	else
 	    return CheckoutMsgMapper.toOkMsg(outBike);
     }
@@ -112,9 +112,9 @@ public class StationServiceImpl implements StationService {
     public CheckinConfirmMsg checkinOneBike(CheckinReqMsg checkinMsg) {
 	Station station = getStation(checkinMsg.getStationId());
 	if (station == null || station.getAvailBikes() >= station.getTotalDocks())
-	    return ComplMsgMapper.toNotOkCheckinMsg();
+	    return ComplMsgMapper.toNotOkCheckinMsg("Not allowed to check in your bike at " + checkinMsg.getStationId());
 
-	InBike inBike = bikeSvc.checkinBike(checkinMsg.getBikeId(), checkinMsg.getStationId());
+	InBike inBike = bikeSvc.checkinPrepare(checkinMsg.getBikeId(), checkinMsg.getStationId());
 	if (inBike != null) {
 	    increaseAvailBikesByOne(inBike.getToStationId());
 	    ComplMsg complMsg = ComplMsgMapper.toComplMsg(inBike);
@@ -123,11 +123,13 @@ public class StationServiceImpl implements StationService {
 		messageId = pubSvc.publishMessage(TOPIC_COMPLETION.name(), complMsg);
 		return ComplMsgMapper.toOkCheckinMsg(complMsg, messageId);
 	    } catch (Exception e) {
-		LOGGER.warning(e.getMessage());
+		return ComplMsgMapper.toNotOkCheckinMsg("Pubsub Exception. Please wait and try again");
+	    } finally{
+		bikeSvc.checkinBike(inBike);
 	    }
 	}
 
-	return ComplMsgMapper.toNotOkCheckinMsg();
+	return ComplMsgMapper.toNotOkCheckinMsg("Bike " + checkinMsg.getBikeId() + " is not checked in");
     }
 
     @Override

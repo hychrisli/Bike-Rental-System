@@ -21,5 +21,7 @@ public interface BikeService {
     
     public OutBike checkoutBike(String userId, String stationId);
     
-    public InBike checkinBike(String bikeId, String stationId);
+    public void checkinBike(InBike inBike);
+    
+    public InBike checkinPrepare(String bikeId, String stationId);
 }

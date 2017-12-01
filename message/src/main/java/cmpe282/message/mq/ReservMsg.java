@@ -1,7 +1,9 @@
 package cmpe282.message.mq;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ReservMsg {
     
     @JsonProperty("transaction_id")

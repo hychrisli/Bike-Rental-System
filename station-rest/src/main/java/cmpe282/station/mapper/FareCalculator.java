@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 public class FareCalculator {
 
+    private static final float SVC_FEE = 2f;
     private static final int BASE_MINUTES = 30;
     private static final int INCR_MINUTES = 15;
     private static final float BASE_RATE = 4.0f;	// half hour
@@ -18,9 +19,9 @@ public class FareCalculator {
 	// LOGGER.info(checkinTs.toString() + " --> " + checkinTs.getTime());
 	long diff = TimeUnit.MILLISECONDS.toMinutes(checkinTs.getTime() - checkoutTs.getTime());
 	// LOGGER.info("" + diff);
-	if ( diff <= 30 ) return BASE_RATE;
+	if ( diff <= 30 ) return  SVC_FEE + BASE_RATE;
 	
-	return BASE_RATE + (( diff - BASE_MINUTES - 1 ) / INCR_MINUTES + 1) * INCR_RATE;
+	return SVC_FEE + BASE_RATE + (( diff - BASE_MINUTES - 1 ) / INCR_MINUTES + 1) * INCR_RATE;
     }
     
 }

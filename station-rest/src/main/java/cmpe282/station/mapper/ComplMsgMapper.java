@@ -14,14 +14,16 @@ public class ComplMsgMapper {
 	checkinMsg.setTxnId(cmplMsg.getTxnId());
 	checkinMsg.setMessageId(messageId);
 	checkinMsg.setGrandTotal(cmplMsg.getGrandTotal());
+	checkinMsg.setStatusDetails("Successfully Checkin In");
 	
 	return checkinMsg;
     }
     
-    public static CheckinConfirmMsg toNotOkCheckinMsg() {
+    public static CheckinConfirmMsg toNotOkCheckinMsg(String details) {
 	
 	CheckinConfirmMsg checkinMsg = new CheckinConfirmMsg();
 	checkinMsg.setCheckedIn(false);
+	checkinMsg.setStatusDetails(details);
 	
 	return checkinMsg;
     }

@@ -10,14 +10,16 @@ public class CheckoutMsgMapper {
 	CheckoutConfirmMsg msg = new CheckoutConfirmMsg();
 	msg.setSuccess(true);
 	msg.setBikeId(outBike.getBikeId());
+	msg.setStatusDetails("Sucessfully Checked Out");
 	
 	return msg;
     }
     
-    public static CheckoutConfirmMsg toNotOkMsg() {
+    public static CheckoutConfirmMsg toNotOkMsg(String details) {
 	CheckoutConfirmMsg msg = new CheckoutConfirmMsg();
 	msg.setSuccess(false);
 	msg.setBikeId("");
+	msg.setStatusDetails(details);
 	
 	return msg;
     }

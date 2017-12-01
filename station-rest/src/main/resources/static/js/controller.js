@@ -44,7 +44,7 @@ app.controller('checkout-ctrl', function($scope, CheckoutService) {
 			console.log(res)
 			console.log(res.is_success)
 			if (res.is_success == false) {
-				$scope.result = "Checkout Unsuccessful";
+				$scope.result = res.status_details;
 			} else {
 				$scope.result = "Successful checkout! Bike ID: " + res.bike_id;
 			}
@@ -67,7 +67,7 @@ app.controller('checkin-ctrl', function($scope, CheckinService) {
 			console.log(res)
 			console.log(res.checked_in)
 			if (res.checked_in == false) {
-				$scope.result = "Checkin Unsuccessful";
+				$scope.result = res.status_details;
 			} else {
 				$scope.result = "Successfully checked in! Grand Total: $" + res.grand_total;
 			}
