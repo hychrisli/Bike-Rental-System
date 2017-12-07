@@ -8,7 +8,10 @@ import (
 )
 
 // MongoDB Config
-const mongodbServer string = "mongodb://mongo-0.mongo,mongo-1.mongo,mongo-2.mongo:27017"
+// const mongodbServer string = "mongodb://mongo-0.mongo,mongo-1.mongo,mongo-2.mongo:27017"
+const mongodbServer string = "mongodb://mongo-0.mongo:27017"
+
+// const mongodbServer string = "mongodb://127.0.0.1:27017"
 const mongodbDatabase string = "cmpe282"
 const mongodbCollection string = "user"
 
@@ -54,6 +57,7 @@ func createOrder(ord Order) error {
 		return err
 	}
 	err = publish(ord)
+	fmt.Println(err)
 	return err
 }
 
@@ -141,6 +145,7 @@ func updateOrderCompletetion(ord Order) error {
 	id := ord.UserID
 	transactionID := ord.TransactionID
 	grandTotal := ord.GrandTotal
+	fmt.Println("GrandTotal is", grandTotal)
 	status := "Order closed"
 	err = c.Update(
 		bson.M{"_id": id},

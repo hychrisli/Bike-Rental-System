@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"cloud.google.com/go/pubsub"
@@ -19,10 +20,16 @@ const subConfirmation string = "SUB_CONFIRMATION"
 const topicCompletion string = "TOPIC_COMPLETION"
 const subCompletion string = "SUB_COMPLETION"
 
-const proj string = "animated-axe-183700"
+// var proj string
 
-// SetUpSubscriptions
+// var proj = "animated-axe-183700"
+
+var proj = "bike-rental-system"
+
+// SetUpSubscriptions is here
 func SetUpSubscriptions() {
+	// setUpEnv()
+
 	topics := []string{
 		topicConfirmation,
 		topicCompletion,
@@ -31,6 +38,7 @@ func SetUpSubscriptions() {
 		subConfirmation,
 		subCompletion,
 	}
+	// op := option.WithServiceAccountFile("/Users/khwu/Downloads/My First Project-b0cabf5396f4.json")
 	for i, topic := range topics {
 		fmt.Print(topic, " ")
 		fmt.Println(subscriptions[i])
@@ -44,6 +52,14 @@ func SetUpSubscriptions() {
 		go setUpSingleSubscription(client, topic, subscription)
 	}
 }
+
+// func setUpEnv() {
+// 	proj = os.Getenv("GOOGLE_CLOUD_PROJECT")
+// 	if proj == "" {
+// 		fmt.Fprintf(os.Stderr, "GOOGLE_CLOUD_PROJECT environment variable must be set.\n")
+// 		os.Exit(1)
+// 	}
+// }
 
 func setUpSingleSubscription(client *pubsub.Client, topic, subscription string) {
 
@@ -131,11 +147,16 @@ func pullMsgs(client *pubsub.Client, name string, topic *pubsub.Topic) error {
 }
 
 func publish(msg Order) error {
+	if proj == "" {
+		proj = os.Getenv("GOOGLE_CLOUD_PROJECT")
+		fmt.Fprintf(os.Stderr, "GOOGLE_CLOUD_PROJECT environment variable must be set.\n")
+		os.Exit(1)
+	}
 	ctx := context.Background()
 	client, err := pubsub.NewClient(ctx, proj)
 
 	dat, _ := json.Marshal(msg)
-	t := client.Topic(topicReservation)
+	t := createTopicIfNotExists(client, topicReservation)
 	result := t.Publish(ctx, &pubsub.Message{
 		Data: dat,
 	})

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3000';
+// const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'http://35.199.190.183:3000';
 
 export const FETCH_USER = 'fetch_user';
 export const fetchUser = () => async dispatch => {

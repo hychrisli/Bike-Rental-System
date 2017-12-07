@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 	uuid "github.com/satori/go.uuid"
 	"github.com/unrolled/render"
 	"github.com/urfave/negroni"
@@ -24,6 +25,10 @@ func NewServer() *negroni.Negroni {
 	n := negroni.Classic()
 	mx := mux.NewRouter()
 	initRoutes(mx, formatter)
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"},
+	})
+	n.Use(c)
 	n.UseHandler(mx)
 	return n
 }
@@ -73,7 +78,7 @@ func getUserHandler(formatter *render.Render) http.HandlerFunc {
 			formatter.JSON(w, http.StatusNotFound, Response{Msg: "user " + id + " not found!"})
 			return
 		}
-		fmt.Println("user:", result)
+		// fmt.Println("user:", result)
 		formatter.JSON(w, http.StatusOK, result)
 	}
 }
