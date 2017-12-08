@@ -1,13 +1,3 @@
-userapi/*
-!userapi/src/
-userapi/src/*
-!userapi/src/userapi/
-!userapi/src/pubsub.pub/
-!userapi/src/pubsub.sub/
-!userapi/src/pubsub.example/
-
-# Compiled class file
-*.class
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
@@ -24,3 +14,4 @@ out/
 .classpath
 .project
 .settings/
+bin/
