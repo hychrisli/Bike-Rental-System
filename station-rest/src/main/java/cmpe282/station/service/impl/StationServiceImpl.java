@@ -3,6 +3,8 @@ package cmpe282.station.service.impl;
 import static cmpe282.message.Topics.TOPIC_COMPLETION;
 import static cmpe282.message.Topics.TOPIC_CONFIRMATION;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import cmpe282.message.direct.CheckinConfirmMsg;
 import cmpe282.message.direct.CheckinReqMsg;
 import cmpe282.message.direct.CheckoutConfirmMsg;
 import cmpe282.message.direct.CheckoutReqMsg;
+import cmpe282.message.direct.StationIdsMsg;
 import cmpe282.message.mq.ComplMsg;
 import cmpe282.message.mq.ConfirmMsg;
 import cmpe282.message.mq.ReservMsg;
@@ -98,9 +101,9 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public CheckoutConfirmMsg checkoutOneBike(CheckoutReqMsg checkoutReqMsg) {
-	OutBike outBike = bikeSvc.checkoutBike(checkoutReqMsg.getUserId());
+	OutBike outBike = bikeSvc.checkoutBike(checkoutReqMsg.getUserId(), checkoutReqMsg.getStationId());
 	if (outBike == null)
-	    return CheckoutMsgMapper.toNotOkMsg();
+	    return CheckoutMsgMapper.toNotOkMsg("No bike for " + checkoutReqMsg.getUserId() + " to check out");
 	else
 	    return CheckoutMsgMapper.toOkMsg(outBike);
     }
@@ -109,9 +112,9 @@ public class StationServiceImpl implements StationService {
     public CheckinConfirmMsg checkinOneBike(CheckinReqMsg checkinMsg) {
 	Station station = getStation(checkinMsg.getStationId());
 	if (station == null || station.getAvailBikes() >= station.getTotalDocks())
-	    return ComplMsgMapper.toNotOkCheckinMsg();
+	    return ComplMsgMapper.toNotOkCheckinMsg("Not allowed to check in your bike at " + checkinMsg.getStationId());
 
-	InBike inBike = bikeSvc.checkinBike(checkinMsg.getBikeId(), checkinMsg.getStationId());
+	InBike inBike = bikeSvc.checkinPrepare(checkinMsg.getBikeId(), checkinMsg.getStationId());
 	if (inBike != null) {
 	    increaseAvailBikesByOne(inBike.getToStationId());
 	    ComplMsg complMsg = ComplMsgMapper.toComplMsg(inBike);
@@ -120,10 +123,23 @@ public class StationServiceImpl implements StationService {
 		messageId = pubSvc.publishMessage(TOPIC_COMPLETION.name(), complMsg);
 		return ComplMsgMapper.toOkCheckinMsg(complMsg, messageId);
 	    } catch (Exception e) {
-		LOGGER.warning(e.getMessage());
+		return ComplMsgMapper.toNotOkCheckinMsg("Pubsub Exception. Please wait and try again");
+	    } finally{
+		bikeSvc.checkinBike(inBike);
 	    }
 	}
 
-	return ComplMsgMapper.toNotOkCheckinMsg();
+	return ComplMsgMapper.toNotOkCheckinMsg("Bike " + checkinMsg.getBikeId() + " is not checked in");
+    }
+
+    @Override
+    public StationIdsMsg getStationIds() {
+	Iterable<Station> stations = stationRepo.findAll();
+	List<String> stationIds = new ArrayList<String>();
+	stations.forEach(s -> stationIds.add(s.getStationId()));
+	StationIdsMsg stationIdsMsg = new StationIdsMsg();
+	stationIdsMsg.setStationIds(stationIds);
+	
+	return stationIdsMsg;
     }
 }

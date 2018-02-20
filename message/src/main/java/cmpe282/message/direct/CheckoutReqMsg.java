@@ -6,6 +6,9 @@ public class CheckoutReqMsg {
 
     @JsonProperty("user_id")
     String userId;
+    
+    @JsonProperty("station_id")
+    String stationId;
 
     public String getUserId() {
         return userId;
@@ -14,6 +17,15 @@ public class CheckoutReqMsg {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
+    public String getStationId() {
+        return stationId;
+    }
+
+    public void setStationId(String stationId) {
+        this.stationId = stationId;
+    }
+    
     
     
 }

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="css/station.css" rel="stylesheet" type="text/css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.3/angular-resource.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/controller.js"></script>
+<body ng-app="station">
+	<div class="container-fluid">
+		<div class="text-center">
+			<h2>Station UI</h2>
+			<p>A UI at station Kiosk</p>
+		</div>
+		<div class="row" ng-controller="station-ctrl">
+			<!-- Station selection -->
+			<div id="div-form" class="col-sm-4"
+				style="background-color: #ffeecc;">
+				<div id="div-note">
+					<p class="bg-warning">Select your station</p>
+				</div>
+				<select class="btn btn-info dropdown-toggle" ng-model="selId"
+					ng-change="onClick()" ng-options="i for i in stationIds"></select>
+				<div id="div-note">
+					<p>{{stationName}}</p>
+					<p>{{availBikes}}</p>
+				</div>
+			</div>
+			<!-- Checkout Form -->
+			<div id="div-form" class="col-sm-4"
+				style="background-color: lavender;" ng-controller="checkout-ctrl">
+				<div id="div-note">
+					<p class="bg-warning">Type in user ID to check out your bike</p>
+				</div>
+				<form ng-submit="checkout()">
+					<div class="form-group row">
+						<div class="col-xs-6">
+							<label for="user ID"> User ID:</label> <input type="text"
+								class="form-control" id="userId" ng-model="userId">
+						</div>
+					</div>
+					<div id="div-note">{{result}}</div>
+					<button type="submit" class="btn btn-primary">Check Out</button>
+				</form>
+			</div>
+			<!-- Checkin form -->
+			<div id="div-form" class="col-sm-4"
+				style="background-color: #b3f0ff;" ng-controller="checkin-ctrl">
+				<div id="div-note">
+					<p class="bg-warning">Type in your bike ID</p>
+				</div>
+				<form ng-submit="checkin()">
+					<div class="form-group row">
+						<div class="col-xs-6">
+							<label for="bike ID"> bike ID:</label> <input type="text"
+								class="form-control" id="bikeId" ng-model="bikeId">
+						</div>
+					</div>
+					<div id="div-note">{{result}}</div>
+					<button type="submit" class="btn btn-success">Check In</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

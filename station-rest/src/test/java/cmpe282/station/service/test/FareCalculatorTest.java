@@ -18,7 +18,7 @@ public class FareCalculatorTest {
 	Date checkoutTs = Timestamp.valueOf("2017-11-20 19:51:31");
 	Date checkinTs = Timestamp.valueOf("2017-11-20 20:21:17");
 	Float grandTotal = FareCalculator.calcFare(checkoutTs, checkinTs);
-	Assert.assertEquals(4.0f, grandTotal, 0.01f);
+	Assert.assertEquals(6.0f, grandTotal, 0.01f);
     }
     
     
@@ -27,7 +27,7 @@ public class FareCalculatorTest {
 	Date checkoutTs = Timestamp.valueOf("2017-11-20 19:51:31");
 	Date checkinTs = Timestamp.valueOf("2017-11-20 20:42:17");
 	Float grandTotal = FareCalculator.calcFare(checkoutTs, checkinTs);
-	Assert.assertEquals(9.0f, grandTotal, 0.01f);
+	Assert.assertEquals(11.0f, grandTotal, 0.01f);
     }
     
     
@@ -36,7 +36,7 @@ public class FareCalculatorTest {
 	Date checkoutTs = Timestamp.valueOf("2017-11-20 19:51:31");
 	Date checkinTs = Timestamp.valueOf("2017-11-20 20:33:17");
 	Float grandTotal = FareCalculator.calcFare(checkoutTs, checkinTs);
-	Assert.assertEquals(6.5f, grandTotal, 0.01f);
+	Assert.assertEquals(8.5f, grandTotal, 0.01f);
     }
     
     @Test
@@ -45,7 +45,7 @@ public class FareCalculatorTest {
 	Date checkoutTs = Timestamp.valueOf("2017-11-20 19:51:31");
 	Date checkinTs = Timestamp.valueOf("2017-11-20 20:51:30");
 	Float grandTotal = FareCalculator.calcFare(checkoutTs, checkinTs);
-	Assert.assertEquals(9.0f, grandTotal, 0.01f);
+	Assert.assertEquals(11.0f, grandTotal, 0.01f);
     }
     
     @Test
@@ -54,7 +54,7 @@ public class FareCalculatorTest {
 	Date checkoutTs = Timestamp.valueOf("2017-11-20 19:51:31");
 	Date checkinTs = Timestamp.valueOf("2017-11-20 20:21:31");
 	Float grandTotal = FareCalculator.calcFare(checkoutTs, checkinTs);
-	Assert.assertEquals(4.0f, grandTotal, 0.01f);
+	Assert.assertEquals(6.0f, grandTotal, 0.01f);
     }
     
     @Test
@@ -63,7 +63,7 @@ public class FareCalculatorTest {
 	Date checkoutTs = Timestamp.valueOf("2017-11-20 19:51:31");
 	Date checkinTs = Timestamp.valueOf("2017-11-20 20:21:32");
 	Float grandTotal = FareCalculator.calcFare(checkoutTs, checkinTs);
-	Assert.assertEquals(4.0f, grandTotal, 0.01f);
+	Assert.assertEquals(6.0f, grandTotal, 0.01f);
     }
     
     
@@ -73,7 +73,7 @@ public class FareCalculatorTest {
 	Date checkoutTs = Timestamp.valueOf("2017-11-20 19:51:31");
 	Date checkinTs = Timestamp.valueOf("2017-11-20 20:22:30");
 	Float grandTotal = FareCalculator.calcFare(checkoutTs, checkinTs);
-	Assert.assertEquals(4.0f, grandTotal, 0.01f);
+	Assert.assertEquals(6.0f, grandTotal, 0.01f);
     }
     
     @Test
@@ -82,7 +82,7 @@ public class FareCalculatorTest {
 	Date checkoutTs = Timestamp.valueOf("2017-11-20 19:51:31");
 	Date checkinTs = Timestamp.valueOf("2017-11-20 20:22:31");
 	Float grandTotal = FareCalculator.calcFare(checkoutTs, checkinTs);
-	Assert.assertEquals(6.5f, grandTotal, 0.01f);
+	Assert.assertEquals(8.5f, grandTotal, 0.01f);
     }
     
     
@@ -92,7 +92,7 @@ public class FareCalculatorTest {
 	Date checkoutTs = Timestamp.valueOf("2017-11-20 19:51:31");
 	Date checkinTs = Timestamp.valueOf("2017-11-20 20:37:30");
 	Float grandTotal = FareCalculator.calcFare(checkoutTs, checkinTs);
-	Assert.assertEquals(6.5f, grandTotal, 0.01f);
+	Assert.assertEquals(8.5f, grandTotal, 0.01f);
     }
     
     @Test
@@ -101,7 +101,7 @@ public class FareCalculatorTest {
 	Date checkoutTs = Timestamp.valueOf("2017-11-20 19:51:31");
 	Date checkinTs = Timestamp.valueOf("2017-11-20 20:37:31");
 	Float grandTotal = FareCalculator.calcFare(checkoutTs, checkinTs);
-	Assert.assertEquals(9.0f, grandTotal, 0.01f);
+	Assert.assertEquals(11.0f, grandTotal, 0.01f);
     }
     
 }

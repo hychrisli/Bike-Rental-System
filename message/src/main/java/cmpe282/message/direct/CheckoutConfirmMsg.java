@@ -9,6 +9,9 @@ public class CheckoutConfirmMsg {
     
     @JsonProperty("bike_id")
     String bikeId;
+    
+    @JsonProperty("status_details")
+    String statusDetails;
 
     @JsonProperty("is_success")
     public boolean isSuccess() {
@@ -26,6 +29,12 @@ public class CheckoutConfirmMsg {
     public void setBikeId(String bikeId) {
         this.bikeId = bikeId;
     }
-    
-    
+
+    public String getStatusDetails() {
+        return statusDetails;
+    }
+
+    public void setStatusDetails(String statusDetails) {
+        this.statusDetails = statusDetails;
+    }
 }

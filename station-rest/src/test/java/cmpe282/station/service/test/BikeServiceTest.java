@@ -63,7 +63,7 @@ public class BikeServiceTest extends AbstractStationServiceTest {
 	.when(rsvdBikeRepo.findOne(refEq(MapIdMapper.toMapId("userId", userId1))))
 	.thenReturn(bike1Rsvd);
 	
-	OutBike outBike = bikeSvc.checkoutBike(userId1);
+	OutBike outBike = bikeSvc.checkoutBike(userId1, station1.getStationId());
 	outBike.setCheckoutTime(checkoutTime);
 	Assert.assertThat(outBike, new ReflectionEquals(bike1Out));
 	
@@ -71,7 +71,7 @@ public class BikeServiceTest extends AbstractStationServiceTest {
 	.when(rsvdBikeRepo.findOne(refEq(MapIdMapper.toMapId("userId", userId2))))
 	.thenReturn(null);
 	
-	outBike = bikeSvc.checkoutBike(userId2);
+	outBike = bikeSvc.checkoutBike(userId2, station1.getStationId());
 	Assert.assertEquals(outBike, null);
 
     }
@@ -82,7 +82,7 @@ public class BikeServiceTest extends AbstractStationServiceTest {
 	.when(outBikeRepo.findOne(refEq(MapIdMapper.toMapId("bikeId", bike1Out.getBikeId()))))
 	.thenReturn(bike1Out);
 	
-	InBike inBike = bikeSvc.checkinBike(bike1Out.getBikeId(),bike1In.getToStationId());
+	InBike inBike = bikeSvc.checkinPrepare(bike1Out.getBikeId(),bike1In.getToStationId());
 	inBike.setCheckinTime(checkinTime);
 	inBike.setGrandTotal(grandTotal);
 
@@ -92,7 +92,7 @@ public class BikeServiceTest extends AbstractStationServiceTest {
 	.when(outBikeRepo.findOne(refEq(MapIdMapper.toMapId("bikeId", bike2.getBikeId()))))
 	.thenReturn(null);
 	
-	inBike = bikeSvc.checkinBike(bike2.getBikeId(), station1.getStationId());
+	inBike = bikeSvc.checkinPrepare(bike2.getBikeId(), station1.getStationId());
 	Assert.assertEquals(inBike, null);
 	
     }

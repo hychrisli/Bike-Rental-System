@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: brs
+  labels:
+    app: web
+spec:
+  containers:
+    - name: cassandra
+      image: launcher.gcr.io/google/cassandra3
+      volumeMounts:
+        - name: cassandra-data
+          mountPath: /var/lib/cassandra
+      ports:
+        - containerPort: 9042 
+    - image: gcr.io/bike-rental-system/station-rest
+      name: station-rest
+      ports:
+        - containerPort: 8080
+      env:
+        - name: CASSANDRA_HOST
+          value: localhost
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /station-rest/bike-rental-system-d3bc3066fbe8.json
+    - image: gcr.io/bike-rental-system/station-pubsub
+      name: station-pubsub
+      env:
+        - name: STATION_REST_HOST
+          value: localhost
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /station-pubsub/bike-rental-system-d3bc3066fbe8.json
+  volumes:
+    - name: cassandra-data
+      persistentVolumeClaim:
+        claimName: cassandra-data
